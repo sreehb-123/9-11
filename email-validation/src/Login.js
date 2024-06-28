@@ -1,9 +1,8 @@
-// src/Login.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
-import './Login.css';  // Import CSS file
+import './Login.css';
 import logoImage from './iitdh logo.jpg'; 
 
 const Login = () => {
@@ -19,7 +18,6 @@ const Login = () => {
             setMessage(error.response.data.message);
         }
     };
-
     return (
         <div className="login-container">
             <img src={logoImage} alt="Logo" className="logo-image" />
