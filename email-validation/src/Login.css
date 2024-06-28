@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Inika&family=Architects+Daughter&display=swap');
+
+body {
+    background-color: #D8D8F6; 
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: white; 
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+p{
+    font-family: 'Inika',serif;
+    color: #3C1361;
+    font-size: 25px;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+
+.input-with-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 10px; 
+    color: #3c1361;
+}
+
+.login-form input {
+    padding: 10px 35px 10px 30px; 
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    background-color: #D8D8F6;
+    font-family: "Architect's Daughter",cursive;
+}
+
+.login-form button {
+    padding: 10px;
+    font-size: 16px;
+    color: white;
+    background-color: #3C1361;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Inika',serif;
+}
+
+.login-form button:hover {
+    background-color: #5e1a7d;
+}
+
+.message {
+    margin-top: 10px;
+    font-size: 14px;
+    color: red;
+}
