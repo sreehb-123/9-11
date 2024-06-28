@@ -37,6 +37,7 @@ HOW TO RUN THE PROJECT:
     git clone https://github.com/sreehb-123/9-11.git
     cd 9-11
   3)Install backend dependencies:-
+    git checkout master
     cd mern-backend
     npm install
   4)Install frontend dependencies:-  
