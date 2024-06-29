@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Inika&family=Architects+Daughter&display=swap');
+.branch-container{
+    background: transparent;
+    height: 100%;
+    width: 70vh;
+    margin-left: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Architects Daughter';
+    color: #3c1361;
+}
+.branch-container ul{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;   
+}
+.branch-container li{
+    list-style: none;
+}
+.branch-container button{
+    margin-bottom: 20px;
+    margin-right: 20px;
+    height: 150px;
+    width: 150px;
+    border-radius: 25px;
+    border: none;
+    background-color: #9d88af;
+    font-family: 'Architects Daughter';
+    color: #fff;
+}
+.branch-container button:hover {
+    background: #978897;
+    border-radius: 25px;
+    transform: scale(1.1);
+  }
+.display{
+    background-color: antiquewhite;
+    width: 75%;
+    margin-left: 20px;
+    margin-top: 30px;
+    height: 100vh;
+    border-radius: 25px;
+}
