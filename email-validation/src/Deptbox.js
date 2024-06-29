@@ -5,7 +5,7 @@ export default function Deptbox() {
     <div className='branch-container'>
         <p>Browse using deparments</p>
         <ul>
-            <li><button>computer science</button></li>
+            <li><button>Computer Science</button></li>
             <li><button>Electrical Engineering</button></li>
             <li><button>Civil Engineering</button></li>
             <li><button>Chemical Engineering</button></li>
