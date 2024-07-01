@@ -1,24 +1,22 @@
-// Import statements at the top
 import React, { useState } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
 import './Login.css';
 import logoImage from './iitdh logo.jpg'; 
-import { useHistory } from 'react-router-dom'; 
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
             const response = await axios.post('http://localhost:5000/validate-email', { username: email, password });
-            if (response.data.success) {
+            if (response.data.success){
                 console.log("Successful!!");
                 navigate('/home');
             } else {
@@ -66,4 +64,4 @@ const Login = () => {
     );
 };
 
-export default Login; // Export statement at the bottom
+export default Login;
