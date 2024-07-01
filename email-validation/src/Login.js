@@ -1,23 +1,36 @@
+// Import statements at the top
 import React, { useState } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
+import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
 import './Login.css';
 import logoImage from './iitdh logo.jpg'; 
+import { useHistory } from 'react-router-dom'; 
 
+// Component definition
 const Login = () => {
     const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+    const history = useHistory();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/validate-email', { email });
-            setMessage(response.data.message);
+            const response = await axios.post('http://localhost:5000/validate-email', { username: email, password });
+            if (response.data.success) {
+                setMessage('Login successful');
+                console.log("Successful!!");
+                history.push('/src/pages/Homepage.js');
+            } else {
+                setMessage('Invalid credentials. Please try again.');
+            }
         } catch (error) {
-            setMessage(error.response.data.message);
+            setMessage('Server error. Please try again later.');
+            console.error('Error:', error);
         }
     };
+
     return (
         <div className="login-container">
             <img src={logoImage} alt="Logo" className="logo-image" />
@@ -35,6 +48,18 @@ const Login = () => {
                         required
                     />
                 </div>
+                <label htmlFor="password" className="visually-hidden">Enter your password</label>
+                <div className="input-with-icon">
+                    <FontAwesomeIcon icon={faLock} className="input-icon" />
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Enter your password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
+                </div>
                 <button type="submit">LOGIN</button>
             </form>
             {message && <p className="message">{message}</p>}
@@ -42,4 +67,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default Login; // Export statement at the bottom
