@@ -1,20 +1,19 @@
 import './Homepage.css';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Deptbox from './components/Deptbox';
-// App.js or your main component fil
+import Navbar from '../components/Navbar';
+import Deptbox from '../components/Deptbox';
+//import BookDisplay from './components/BookDisplay';
 
-
-function App() {
+function Home() {
   return (
       <div className='App'>
         <Navbar />
         <div>
           <Deptbox />
-          <BookDisplay />
+          {/*<BookDisplay />*/}
         </div>
       </div>
   );
 }
 
-export default App;
+export default Home;
