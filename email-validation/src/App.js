@@ -4,10 +4,13 @@ import Login from './Login';  // Import the Login component
 
 function App() {
     return (
-        <div className="App">
-            <Login />  {/* Use the Login component */}
-        </div>
-    );
+    <Router>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/home" element={<Home />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;
