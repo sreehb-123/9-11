@@ -6,8 +6,8 @@ import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
 import './Login.css';
 import logoImage from './iitdh logo.jpg'; 
 import { useHistory } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom'; 
 
-// Component definition
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -19,9 +19,8 @@ const Login = () => {
         try {
             const response = await axios.post('http://localhost:5000/validate-email', { username: email, password });
             if (response.data.success) {
-                setMessage('Login successful');
                 console.log("Successful!!");
-                history.push('/src/pages/Homepage.js');
+                navigate('/home');
             } else {
                 setMessage('Invalid credentials. Please try again.');
             }
