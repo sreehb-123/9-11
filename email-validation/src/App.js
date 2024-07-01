@@ -1,5 +1,7 @@
 import React from 'react';
 import Login from './Login';  // Import the Login component
+import Home from './pages/Homepage';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; 
 
 function App() {
     return (
