@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
 import 'boxicons/css/boxicons.min.css';
+import { Navigate, useNavigate } from 'react-router-dom';
 import './Navbar.css'
 
 function Menu() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  
+    const navigate = useNavigate();
+
     const toggleSidebar = () => {
         setIsSidebarOpen(prevState => !prevState);
     };
 
     const closeSidebar = () => {
         setIsSidebarOpen(false); // Close the sidebar explicitly
-      };
+    };
 
-  
+    const handleLogout = () => {
+        navigate('/login');
+    };
     return (
         <div>
             <button className='menu-dropdown' onClick={toggleSidebar}>
@@ -31,7 +35,7 @@ function Menu() {
             <li><button><i class='bx bxs-bookmark'></i>  Saved</button></li>
           </ul>
           <div className="sidebar-footer">
-            <button className="logout-button">LOGOUT</button>
+            <button className="logout-button" onClick={handleLogout}>LOGOUT</button>
           </div>
         </div>
       )}

@@ -142,6 +142,7 @@
     background: #9d88af;
     border-radius: 5px;
     transform: scale(1.1);
+    cursor: pointer;
   }
 .close-sidebar{
     width: 55px;
