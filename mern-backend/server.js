@@ -1,15 +1,31 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 const cors = require('cors');
 const fs = require('fs');
+const { title } = require('process');
 
 const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
 app.use(cors());
+app.use(express.json());
 
-// Read user data from users.json file
+mongoose.connect('mongodb://localhost:27017/libraryDB', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
+
+const bookSchema = new mongoose.Schema({
+    title: String,
+    author: String,
+    genre: String,
+    units: Number,
+})
+
+const Book = mongoose.model('Book',bookSchema);
+
 let users = [];
 fs.readFile('users.json', 'utf8', (err, data) => {
     if (err) {
@@ -19,12 +35,10 @@ fs.readFile('users.json', 'utf8', (err, data) => {
     users = JSON.parse(data);
 });
 
-// Function to check credentials
 const checkCredentials = (username, password) => {
     return users.some(user => user.username === username && user.password === password);
 };
 
-// Login endpoint
 app.post('/validate-email', (req, res) => {
     const { username, password } = req.body;
 
@@ -32,6 +46,22 @@ app.post('/validate-email', (req, res) => {
         res.json({ success: true });
     } else {
         res.json({ success: false });
+    }
+});
+
+app.get('/search', async (req, res) => {
+    try {
+      const { q } = req.query;
+      const books = await Book.find({
+        $or: [
+          { title: new RegExp(q, 'i') },
+          { author: new RegExp(q, 'i') },
+          { genre: new RegExp(q, 'i') },
+        ],
+      });
+      res.json(books);
+    } catch (error) {
+      res.status(500).send(error);
     }
 });
 
