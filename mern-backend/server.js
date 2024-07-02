@@ -21,7 +21,9 @@ const bookSchema = new mongoose.Schema({
     title: String,
     author: String,
     genre: String,
-    units: Number,
+    count: Number,
+    department: String,
+    description: String,
 })
 
 const Book = mongoose.model('Book',bookSchema);
@@ -52,16 +54,20 @@ app.post('/validate-email', (req, res) => {
 app.get('/search', async (req, res) => {
     try {
       const { q } = req.query;
-      const books = await Book.find({
-        $or: [
-          { title: new RegExp(q, 'i') },
-          { author: new RegExp(q, 'i') },
-          { genre: new RegExp(q, 'i') },
-        ],
-      });
+      const books = await Book.find({ title: new RegExp(q, 'i') });
       res.json(books);
     } catch (error) {
-      res.status(500).send(error);
+      res.status(500).send({error: 'Internal Server Error'});
+    }
+});
+
+app.get('/book/:id', async (req,res) => {
+    const { id } = req.params;
+    try{
+        const book = await Book.findById(id);
+        res.json(book);
+    } catch(error){
+        res.status(500).send({error: 'Internal Server Error'});
     }
 });
 

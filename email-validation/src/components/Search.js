@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'boxicons/css/boxicons.min.css';
 import './Navbar.css';
@@ -38,10 +39,10 @@ function Search() {
       <ul className="search-results">
           {results.map((book) => (
               <li key={book._id}>
-                  <h3>{book.title}</h3>
+                  <Link to={'/book/${book._id}'}>
+                    <h3>{book.title}</h3>
+                  </Link>
                   <p>{book.author}</p>
-                  <p>{book.genre}</p>
-                  <p>{book.units}</p>
               </li>
           ))}
       </ul>
