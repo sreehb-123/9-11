@@ -39,7 +39,7 @@ function Search() {
       <ul className="search-results">
           {results.map((book) => (
               <li key={book._id}>
-                  <Link to={'/book/${book._id}'}>
+                  <Link to={`/book/${book._id}`}>
                     <h3>{book.title}</h3>
                   </Link>
                   <p>{book.author}</p>

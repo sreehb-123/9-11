@@ -54,20 +54,31 @@ app.post('/validate-email', (req, res) => {
 app.get('/search', async (req, res) => {
     try {
       const { q } = req.query;
-      const books = await Book.find({ title: new RegExp(q, 'i') });
-      res.json(books);
+      const searchCriteria = {
+        $or: [
+            { title: new RegExp(q, 'i') },
+            { author: new RegExp(q, 'i') },
+            { genre: new RegExp(q, 'i') }
+        ]
+    };
+    const books = await Book.find(searchCriteria);
+    res.json(books);
     } catch (error) {
       res.status(500).send({error: 'Internal Server Error'});
     }
 });
 
-app.get('/book/:id', async (req,res) => {
+app.get('/book/:id', async (req, res) => {
     const { id } = req.params;
-    try{
+    try {
         const book = await Book.findById(id);
+        if (!book) {
+            return res.status(404).json({ error: 'Book not found' });
+        }
         res.json(book);
-    } catch(error){
-        res.status(500).send({error: 'Internal Server Error'});
+    } catch (error) {
+        console.error('Error fetching book:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 });
 
