@@ -40,9 +40,9 @@
   
   .search-input {
     padding: 10px 20px;
-    padding-right: 40px; /* Add padding to the right for the icon */
+    padding-right: 40px;
     border: 1px solid #ccc;
-    border-radius: 25px ; /* Semicircular end on the left side */
+    border-radius: 25px ;
     font-size: 16px;
     transition: all 0.3s ease;
     width: 500px;
@@ -58,13 +58,14 @@
   
   .search i {
     position: absolute;
-    right: 10px; /* Position icon inside input */
+    right: 10px;
     width: 20px;
     height: 20px;
     cursor: pointer;
     transform: translateY(50%);
     font-size: 25px;
   }
+
   .menu-dropdown{
         background: transparent;
         margin: 0;
@@ -72,13 +73,15 @@
         font-size: 45px;
         transition: transform 0.3s ease;
   }
+
   .menu-dropdown i{
     color: #3c1361;
   }
+
   .menu-dropdown:hover {
-    transform: scale(1.2); /* Scale up the button icon on hover */
+    transform: scale(1.2);
   }
-  /* Sidebar styles */
+
 .sidebar {
     position: fixed;
     top: 0;
@@ -118,7 +121,7 @@
     text-align: left;
     padding: 10px;
     font-family: Architects Daughter;
-    border-top: 1px solid #ccc; /* Top border */
+    border-top: 1px solid #ccc;
 
   }
   
@@ -138,12 +141,14 @@
     font-family: 'Inika',serif;
     font-size: 20px;
   }
+  
   .logout-button:hover {
     background: #9d88af;
     border-radius: 5px;
     transform: scale(1.1);
     cursor: pointer;
   }
+
 .close-sidebar{
     width: 55px;
     height: 55px;
@@ -152,9 +157,11 @@
     background: transparent;
     border: none;
 }
+
 .close-sidebar i{
     color: #3c1361;
 }
+
   @media (max-width: 991px) {
     .navbar {
       flex-wrap: wrap;

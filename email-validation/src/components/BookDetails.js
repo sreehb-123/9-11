@@ -40,7 +40,7 @@ function BookDetails() {
             <div>
                 <Navbar />
             </div>
-            <h2>{book.title}</h2>
+            <h1>{book.title}</h1>
             <p><strong>Author:</strong> {book.author}</p>
             <p><strong>Department:</strong> {book.department}</p>
             <p><strong>Genre:</strong> {book.genre}</p>

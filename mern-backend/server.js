@@ -82,6 +82,17 @@ app.get('/book/:id', async (req, res) => {
     }
 });
 
+app.get('/department/:dept', async (req, res) => {
+    const { dept } = req.params;
+    try {
+        const books = await Book.find({ department: dept });
+        res.json(books);
+    } catch (error) {
+        console.error('Error fetching books by department:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
