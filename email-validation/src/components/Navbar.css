@@ -91,7 +91,7 @@
         border: none;
         font-size: 45px;
         transition: transform 0.3s ease;
-       
+       cursor: pointer;
   }
 
   .menu-dropdown i{
@@ -180,6 +180,7 @@
     transform: translateX(-40%);
     background: transparent;
     border: none;
+    cursor: pointer;
 }
 
 .close-sidebar i{

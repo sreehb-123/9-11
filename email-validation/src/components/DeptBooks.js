@@ -48,7 +48,7 @@ function DeptBooks(){
             <Navbar />
         </div>
         <div className="department-books">
-            <h2>Home {dept} Department</h2>
+            <h2>{dept} Department</h2>
             <ul className="bookList">
                 {books.map(book => (
                     <li key={book._id}>

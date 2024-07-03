@@ -183,6 +183,7 @@
     background: transparent;
     border: none;
     font-size: 18px;
+    cursor: pointer;
   }
   .nav-btn:hover{
     text-decoration: underline;
