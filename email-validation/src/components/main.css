@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inika&family=Architects+Daughter&display=swap');
+/*deptBox*/
 .branch-container{
     position: relative;
     background: transparent;
@@ -47,9 +48,18 @@
     height: 100vh;
     border-radius: 25px;
 }
-.NAVBAR{
-    position: sticky;
+@media (max-width: 991px) {
+  .branch-container{
+    top: 100px;
+  }
 }
+.NAVBAR {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/*bookDetails*/
 .book-details {
     background-color: #f0f0f0;
     padding: 20px;
@@ -89,9 +99,10 @@
   .book-details .info p:last-child {
     margin-bottom: 0;
   }
+  /*deptBooks*/
   .department-books {
     position: relative;
-    background-color: #d8d8f6;
+    background: transparent;
     padding: 20px;
     margin: 20px;
     font-family: 'Arial', sans-serif;
@@ -101,8 +112,7 @@
     top: 0; 
     left: 10%;
     overflow:  visible;
-    height: 100vh;
-    z-index: -1;
+    z-index: 0;
 
 }
 
@@ -113,6 +123,7 @@
     align-items: center;
     list-style-type: none; 
     padding: 0; 
+    
 }
 
 .department-books h2 {
@@ -162,8 +173,85 @@
     padding: 0 0 0 10px;
     font-family:'Architects Daughter';
   }
-  @media (max-width: 991px) {
-    .branch-container{
-      top: 100px;
-    }
+  .navigation{
+    position: absolute;
+    top: 110px;
+    left: 20px;
   }
+  .nav-btn{
+    font-family:'Architects Daughter';
+    background: transparent;
+    border: none;
+    font-size: 18px;
+  }
+  .nav-btn:hover{
+    text-decoration: underline;
+  }
+  /*searchResults*/
+  .search-results {
+    max-width: 80%;
+    margin: 20px auto; 
+    padding: 20px;
+    background: transparent;
+    border-radius: 10px;
+    max-height: 70vh; 
+    overflow-y: scroll; 
+    -ms-overflow-style: none;  
+    scrollbar-width: none;  
+  }
+  
+  .search-results::-webkit-scrollbar {
+    display: none; 
+  }
+  
+  
+  .search-results ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .search-results li {
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    font-family: 'Architects Daughter';
+  }
+  
+  .search-results li:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .search-results h3 {
+    margin: 0 0 10px;
+    font-size: 22px;
+    color: #333;
+  }
+  
+  .search-results p {
+    margin: 0;
+    color: #666;
+    font-size: 18px;
+    font-family: 'Architects Daughter';
+  }
+  
+  .search-results a {
+    text-decoration: none;
+    color: #007bff; 
+  }
+  
+  .search-results a:hover {
+    text-decoration: underline;
+  }
+  
+  
+  .error-message {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
