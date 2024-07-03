@@ -36,7 +36,7 @@ function Menu() {
             <li><button onClick={navigateHome}><i class='bx bxs-home'></i>  Home</button></li>
             <li><button><i class='bx bxs-bell'></i>  Notification</button></li>
             <li><button><i class='bx bx-category'></i>  Categories</button></li>
-            <li><button><i class='bx bxs-book'></i>  Requested book</button></li>
+            <li><button><i class='bx bxs-book'></i> Issued books</button></li>
             <li><button><i class='bx bxs-bookmark'></i>  Saved</button></li>
           </ul>
           <div className="sidebar-footer">
