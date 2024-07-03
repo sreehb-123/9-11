@@ -1,39 +1,27 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'boxicons/css/boxicons.min.css';
 import './Navbar.css';
 
 function Search() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [results, setResults] = useState([]);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleSearchChange = (e) => {
     const value = e.target.value;
     setSearchTerm(value);
-
-    if (value === '') {
-      setResults([]); 
-      setError(''); 
-    }
+    setError('');
   };
 
-  const handleSearchClick = async () => {
+  const handleSearchClick = () => {
     if (searchTerm.trim().length > 2) {
-      try {
-        const response = await fetch(`http://localhost:5000/search?q=${searchTerm}`);
-        const data = await response.json();
-        setResults(data);
-        setError(''); 
-      } catch (error) {
-        console.error('Error fetching search results', error);
-        setError('Error fetching search results');
-      }
+      navigate(`/search-results?q=${searchTerm}`);
     } else {
       if (searchTerm.trim().length > 0) {
-        console.log('Search term must be longer than 2 characters.');
-        
+        setError('Search term must be longer than 2 characters.');
       }
     }
   };
@@ -51,16 +39,6 @@ function Search() {
         <i className="bx bx-search"></i>
       </button>
       {error && <p className="error-message">{error}</p>}
-      <ul className="search-results">
-        {results.map((book) => (
-          <li key={book._id}>
-            <Link to={`/book/${book._id}`}>
-              <h3>{book.title}</h3>
-            </Link>
-            <p>{book.author}</p>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 }
