@@ -7,21 +7,35 @@ import './Navbar.css';
 function Search() {
   const [searchTerm, setSearchTerm] = useState('');
   const [results, setResults] = useState([]);
+   const [error, setError] = useState('');
 
   const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
+    const value = e.target.value;
+    setSearchTerm(value);
+
+    if (value === '') {
+      setResults([]); 
+      setError(''); 
+    }
   };
 
   const handleSearchClick = async() => {
-    if(searchTerm.length > 2){
+    if(searchTerm.trim().length > 2){
       try{
         const response = await fetch(`http://localhost:5000/search?q=${searchTerm}`);
         const data = await response.json();
         setResults(data);
-      } catch (error){
-        console.error('Error fetching search results',error);
+        setError(''); 
+      } catch (error) {
+        console.error('Error fetching search results', error);
+        setError('Error fetching search results');
       }
-    } 
+    } else {
+      if (searchTerm.trim().length > 0) {
+        console.log('Search term must be longer than 2 characters.');
+        
+      }
+    }
   };
 
   return (
