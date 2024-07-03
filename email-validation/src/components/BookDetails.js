@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "./Navbar";
+import './main.css';
 
 function BookDetails() {
     const { id } = useParams();
@@ -36,17 +37,21 @@ function BookDetails() {
     }
 
     return (
-        <div className="book-details">
-            <div>
+        <>
+        <div className="NAVBAR">
                 <Navbar />
             </div>
+        <div className="book-details">
             <h1>{book.title}</h1>
-            <p><strong>Author:</strong> {book.author}</p>
-            <p><strong>Department:</strong> {book.department}</p>
-            <p><strong>Genre:</strong> {book.genre}</p>
-            <p><strong>Description:</strong> {book.description}</p>
-            <p><strong>Number of units left:</strong> {book.count}</p>
+            <div className="info">
+                <p><strong>Author:</strong> {book.author}</p>
+                <p><strong>Department:</strong> {book.department}</p>
+                <p><strong>Genre:</strong> {book.genre}</p>
+                <p><strong>Description:</strong> {book.description}</p>
+                <p><strong>Number of units left:</strong> {book.count}</p>
+            </div>
         </div>
+        </>
     );
 }
 

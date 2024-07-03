@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inika&family=Architects+Daughter&display=swap');
 .branch-container{
+    position: relative;
     background: transparent;
     height: 100%;
     width: 70vh;
@@ -10,6 +11,7 @@
     align-items: center;
     font-family: 'Architects Daughter';
     color: #3c1361;
+    top: 50px;
 }
 .branch-container ul{
     display: flex;
@@ -45,3 +47,123 @@
     height: 100vh;
     border-radius: 25px;
 }
+.NAVBAR{
+    position: sticky;
+}
+.book-details {
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 25px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    font-family: 'Architects Daughter';
+    width: 80vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 10px auto;
+    
+  }
+  
+  .book-details h1 {
+    font-size: 28px;
+    margin-bottom: 10px;
+    
+  }
+  
+  .book-details .info {
+    margin-top: 15px;
+    
+  }
+  
+  .book-details .info p {
+    margin-bottom: 8px;
+    font-family: 'Architects Daughter';
+  }
+  
+  .book-details .info strong {
+    font-weight: bold;
+  }
+  
+  .book-details .info p:last-child {
+    margin-bottom: 0;
+  }
+  .department-books {
+    position: relative;
+    background-color: #d8d8f6;
+    padding: 20px;
+    margin: 20px;
+    font-family: 'Arial', sans-serif;
+    max-height: 70vh; 
+    overflow-y: auto;
+    width: 70vw; 
+    top: 0; 
+    left: 10%;
+    overflow:  visible;
+    height: 100vh;
+    z-index: -1;
+
+}
+
+.bookList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly; 
+    align-items: center;
+    list-style-type: none; 
+    padding: 0; 
+}
+
+.department-books h2 {
+    color: #343a40;
+    font-size: 20px;
+    margin-bottom: 15px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Inika', serif;
+}
+
+.department-books li {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    font-family: 'Architects Daughter';
+    height: 240px;
+    font-size: 18px;
+    width: 45%; 
+    margin: 10px; 
+    padding: 10px; 
+}
+
+  
+  .department-books li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .department-books h2 a {
+    color: #007bff;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .department-books h2 a:hover {
+    text-decoration: underline;
+  }
+  
+  .department-books p {
+    margin:  0;
+    color: #6c757d;
+    font-size: 18px;
+    padding: 0 0 0 10px;
+    font-family:'Architects Daughter';
+  }
+  @media (max-width: 991px) {
+    .branch-container{
+      top: 100px;
+    }
+  }
