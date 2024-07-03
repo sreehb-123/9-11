@@ -6,6 +6,7 @@ import Search from './components/Search';
 import BookDetails from './components/BookDetails';
 import DeptBooks from './components/DeptBooks';
 import SearchResults from './components/searchResults';
+import IssuedBooks from './components/IssuedBooks';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/search-results" element={<SearchResults />} />
         <Route path="/book/:id" element={<BookDetails />} />
         <Route path="/department/:dept" element={<DeptBooks />} />
+        <Route path="/issued-books" element={<IssuedBooks />}/>
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
       </Routes>

@@ -25,6 +25,10 @@ function Menu() {
         navigate('/home');
     };
 
+    const showIssuedBooks = () => {
+        navigate('/issued-books');
+    };
+
     useEffect(() => {
         const handleOutsideClick = (e) => {
             if (sidebarRef.current && !sidebarRef.current.contains(e.target)) {
@@ -61,13 +65,13 @@ function Menu() {
                             </button>
                         </li>
                         <li>
-                            <button>
-                                <i className="bx bxs-book"></i> Requested book
+                            <button onClick={showIssuedBooks}>
+                                <i className="bx bxs-book"></i> Issued books
                             </button>
                         </li>
                         <li>
                             <button>
-                                <i className="bx bxs-bookmark"></i> Issued books
+                                <i className="bx bxs-bookmark"></i> Saved
                             </button>
                         </li>
                     </ul>
