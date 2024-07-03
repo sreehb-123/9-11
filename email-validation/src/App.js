@@ -5,13 +5,14 @@ import Home from './pages/Homepage';
 import Search from './components/Search';
 import BookDetails from './components/BookDetails';
 import DeptBooks from './components/DeptBooks';
+import SearchResults from './components/searchResults';
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/home" element={<Home />} />
-        <Route path="/search" element={<Search />} />
+        <Route path="/search-results" element={<SearchResults />} />
         <Route path="/book/:id" element={<BookDetails />} />
         <Route path="/department/:dept" element={<DeptBooks />} />
         <Route path="/" element={<Navigate to="/login" />} />
