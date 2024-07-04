@@ -26,6 +26,12 @@ function Search() {
     }
   };
 
+  const handleKeyPress = (e) => {
+    if(e.key === 'Enter'){
+      handleSearchClick();
+    }
+  }
+
   return (
     <div className="search">
       <input
@@ -33,6 +39,7 @@ function Search() {
         placeholder="Type to search..."
         value={searchTerm}
         onChange={handleSearchChange}
+        onKeyPress={handleKeyPress}
         className="search-input"
       />
       <button onClick={handleSearchClick} className="search-button">

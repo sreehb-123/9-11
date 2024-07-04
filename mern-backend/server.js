@@ -137,10 +137,26 @@ app.get('/issued-books', async (req, res) => {
     try {
         console.log('Fetching issued books...');
         const issuedBooks = await IssuedBook.find();
-        console.log('Issued books:', issuedBooks);
         res.json(issuedBooks);
     } catch (error) {
         console.error('Error fetching issued books:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+app.post('/return-book/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const book = await Book.findById(id);
+        if (!book) {
+            return res.status(404).json({ error: 'Book not found' });
+        }
+        book.count += 1;
+        await book.save();
+        await IssuedBook.findOneAndDelete({ bookId: id });
+        res.json({ book });
+    } catch (error) {
+        console.error('Error returning book:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
