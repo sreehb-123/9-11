@@ -54,9 +54,10 @@
   }
 }
 .NAVBAR {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
 }
 
 /*bookDetails*/
@@ -73,7 +74,7 @@
     justify-content: center;
     align-items: center;
     margin: 10px auto;
-    
+    transform: translateY(25%);
   }
   
   .book-details h1 {
@@ -84,9 +85,12 @@
   
   .book-details .info {
     margin-top: 15px;
-    
+    display: flex;
+    flex-direction: row;
   }
-  
+  .book-details .info div{
+    width: 40%;
+  }
   .book-details .info p {
     margin-bottom: 8px;
     font-family: 'Architects Daughter';
@@ -99,8 +103,34 @@
   .book-details .info p:last-child {
     margin-bottom: 0;
   }
-  /*deptBooks*/
-  .department-books {
+  .book-img{
+    width: 40%;
+    background: transparent;
+    margin-right: 25px;
+    background-size: cover; /* Ensure the background image covers the entire div */
+    background-position: center;
+    
+    
+  }
+  .bookImg{
+    margin: 23px;
+    width: 90%;
+    height: 80%;
+  }
+  .book-btn{
+    height: 40px;
+    width: 100px;
+    background-color: #9d88af;
+    border-radius: 25px;
+    border: none;
+    font-family: 'Architects Daughter';
+    font-size: 23px;
+  }
+  #issue:hover{
+    transform: scale(1.2);
+  }
+  /*deptBooks issued books*/
+  .books {
     position: relative;
     background: transparent;
     padding: 20px;
@@ -126,7 +156,7 @@
     
 }
 
-.department-books h2 {
+.books h2 {
     color: #343a40;
     font-size: 20px;
     margin-bottom: 15px;
@@ -136,7 +166,7 @@
     font-family: 'Inika', serif;
 }
 
-.department-books li {
+.books li {
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -150,23 +180,23 @@
 }
 
   
-  .department-books li:hover {
+  .books li:hover {
     transform: translateY(-5px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   }
   
-  .department-books h2 a {
+  .books h2 a {
     color: #007bff;
     text-decoration: none;
     margin: 0;
     padding: 0;
   }
   
-  .department-books h2 a:hover {
+  .books h2 a:hover {
     text-decoration: underline;
   }
   
-  .department-books p {
+  .books p {
     margin:  0;
     color: #6c757d;
     font-size: 18px;
