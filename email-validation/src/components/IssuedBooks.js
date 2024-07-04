@@ -32,9 +32,9 @@ function IssuedBooks() {
             <div className="NAVBAR">
                 <Navbar />
             </div>
-            <div className="issued-books">
+            <div className="books" id="issued-books">
                 <h2>Issued Books</h2>
-                <ul>
+                <ul className="bookList">
                     {issuedBooks.map(book => (
                         <li key={book._id}>
                             <h2>
