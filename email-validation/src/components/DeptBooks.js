@@ -47,7 +47,7 @@ function DeptBooks(){
         <div className="NAVBAR">
             <Navbar />
         </div>
-        <div className="department-books">
+        <div className="books">
             <h2>{dept} Department</h2>
             <ul className="bookList">
                 {books.map(book => (
