@@ -126,6 +126,9 @@
     font-family: 'Architects Daughter';
     font-size: 23px;
   }
+  .book-btn:hover{
+    cursor: pointer;
+  }
   #issue:hover{
     transform: scale(1.2);
   }
