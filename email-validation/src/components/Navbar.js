@@ -1,4 +1,4 @@
-import React from 'react'; // Replace with your SVG icon// Re
+import React from 'react';
 import './Navbar.css';
 import Search from './Search';
 import Menu from './Menu';

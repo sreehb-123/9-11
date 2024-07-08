@@ -29,6 +29,10 @@ function Menu() {
         navigate('/issued-books');
     };
 
+    const notificationsPage = () => {
+        navigate('/notifications');
+    };
+
     useEffect(() => {
         const handleOutsideClick = (e) => {
             if (sidebarRef.current && !sidebarRef.current.contains(e.target)) {
@@ -60,8 +64,8 @@ function Menu() {
                             </button>
                         </li>
                         <li>
-                            <button>
-                                <i className="bx bxs-bell"></i> Notification
+                            <button onClick={notificationsPage}>
+                                <i className="bx bxs-bell"></i> Notifications
                             </button>
                         </li>
                         <li>

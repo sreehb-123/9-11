@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const fs = require('fs');
 const { title } = require('process');
+const schedule = require('node-schedule');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -36,6 +37,27 @@ const issuedBookSchema = new mongoose.Schema({
 });
 
 const IssuedBook = mongoose.model('IssuedBook', issuedBookSchema);
+
+const Notification = mongoose.model('Notification',new mongoose.Schema({
+    userId: String,
+    message: String,
+    date: { type: Date, default: Date.now },
+}));
+
+const FIFTEEN_DAYS_IN_MS = 15 * 24 * 60 * 60 * 1000;
+
+schedule.scheduleJob('0 0 * * *', async () => {
+    try {
+        const overdueBooks = await IssuedBook.find({
+            issueDate: { $lt: new Date(Date.now() - FIFTEEN_DAYS_IN_MS) }
+        });
+        overdueBooks.forEach(book => {
+            console.log(`Notification: Book titled "${book.title}" is overdue.`);
+        });
+    } catch (error) {
+        console.error('Error scheduling notifications:', error);
+    }
+});
 
 let users = [];
 fs.readFile('users.json', 'utf8', (err, data) => {
@@ -157,6 +179,18 @@ app.post('/return-book/:id', async (req, res) => {
         res.json({ book });
     } catch (error) {
         console.error('Error returning book:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+app.get('/notifications/:userId', async (req, res) => {
+    try {
+        const overdueBooks = await IssuedBook.find({
+            issueDate: { $lt: new Date(Date.now() - FIFTEEN_DAYS_IN_MS) }
+        });
+        res.json(overdueBooks);
+    } catch (error) {
+        console.error('Error fetching notifications:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
