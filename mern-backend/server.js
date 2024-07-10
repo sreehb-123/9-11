@@ -195,6 +195,16 @@ app.get('/notifications/:userId', async (req, res) => {
     }
 });
 
+app.delete('/clear-issued-books', async(req,res) => {
+    try{
+        await IssuedBook.deleteMany({});
+        res.status(200).json({ message: 'Issued books cleared successfully' });
+    } catch (error) {
+        console.error('Error clearing issued books:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
