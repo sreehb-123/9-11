@@ -2,25 +2,21 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const morgan = require('morgan');
 const fs = require('fs');
 const { title } = require('process');
+const schedule = require('node-schedule');
 
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.json());
 
 mongoose.connect('mongodb://localhost:27017/libraryDB', {
     useNewUrlParser: true,
-    useUnifiedTopology: true
-  })
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.error('MongoDB connection error:', err));
-  
+    useUnifiedTopology: true,
+});
 
 const bookSchema = new mongoose.Schema({
     title: String,
@@ -34,7 +30,7 @@ const bookSchema = new mongoose.Schema({
 const Book = mongoose.model('Book',bookSchema);
 
 const issuedBookSchema = new mongoose.Schema({
-    bookId: { type: mongoose.Schema.Types.ObjectId, ref: 'Book' },
+    bookId: mongoose.Schema.Types.ObjectId,
     title: String,
     author: String,
     issueDate: Date
@@ -42,14 +38,26 @@ const issuedBookSchema = new mongoose.Schema({
 
 const IssuedBook = mongoose.model('IssuedBook', issuedBookSchema);
 
-const savedBookSchema = new mongoose.Schema({
-    bookId: mongoose.Schema.Types.ObjectId,
-    title: String,
-    author: String,
-});
+const Notification = mongoose.model('Notification',new mongoose.Schema({
+    userId: String,
+    message: String,
+    date: { type: Date, default: Date.now },
+}));
 
-const SavedBook = mongoose.model('SavedBook', savedBookSchema);
-module.exports = { Book, SavedBook };
+const FIFTEEN_DAYS_IN_MS = 15 * 24 * 60 * 60 * 1000;
+
+schedule.scheduleJob('0 0 * * *', async () => {
+    try {
+        const overdueBooks = await IssuedBook.find({
+            issueDate: { $lt: new Date(Date.now() - FIFTEEN_DAYS_IN_MS) }
+        });
+        overdueBooks.forEach(book => {
+            console.log(`Notification: Book titled "${book.title}" is overdue.`);
+        });
+    } catch (error) {
+        console.error('Error scheduling notifications:', error);
+    }
+});
 
 let users = [];
 fs.readFile('users.json', 'utf8', (err, data) => {
@@ -175,71 +183,14 @@ app.post('/return-book/:id', async (req, res) => {
     }
 });
 
-app.post('/save-book/:id', async (req, res) => {
-    const { id } = req.params;
+app.get('/notifications/:userId', async (req, res) => {
     try {
-        console.log(`Fetching book with ID: ${id}`);
-        const book = await Book.findById(id);
-        if (!book) {
-            return res.status(404).json({ error: 'Book not found' });
-        }
-
-        console.log(`Checking if the book is already saved`);
-        const existingSavedBook = await SavedBook.findOne({ bookId: book._id });
-        if (existingSavedBook) {
-            console.log('Book is already saved');
-            return res.status(400).json({ error: 'This book has already been saved' });
-        }
-
-        console.log('Saving new book');
-        const savedBook = new SavedBook({
-            bookId: book._id,
-            title: book.title,
-            author: book.author,
+        const overdueBooks = await IssuedBook.find({
+            issueDate: { $lt: new Date(Date.now() - FIFTEEN_DAYS_IN_MS) }
         });
-        await savedBook.save();
-
-        console.log('Book saved successfully');
-        const savedBooks = await SavedBook.find();
-        console.log('Current state of saved books:', savedBooks);
-        res.json({ message: 'Book saved successfully', book });
+        res.json(overdueBooks);
     } catch (error) {
-        console.error('Error saving book:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-
-// Endpoint to get saved books
-app.get('/saved-books', async (req, res) => {
-    try {
-        console.log('Fetching saved books...');
-        const savedBooks = await SavedBook.find();
-        res.json(savedBooks);
-    } catch (error) {
-        console.error('Error fetching saved books:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-
-// POST endpoint to un-save a book by ID
-app.delete('/unsave-book/:id', async (req, res) => {
-    const { id } = req.params;
-    try {
-        console.log(`Un-saving book with ID: ${id}`);
-
-        const book = await SavedBook.findOne({ bookId: id });
-        
-        if (!book) {
-            console.log(`Book with ID ${id} not found in saved books`);
-            return res.status(404).json({ error: 'Book not found in saved books' });
-        }
-
-        await book.save();
-        await SavedBook.findOneAndDelete({ bookId: id });
-        console.log('Book un-saved successfully');
-        res.json({ message: 'Book un-saved successfully', book });
-    } catch (error) {
-        console.error('Error un-saving book:', error);
+        console.error('Error fetching notifications:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
