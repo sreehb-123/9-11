@@ -2,11 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { useLocation , Link} from 'react-router-dom';
 import Navbar from './Navbar';
 import './main.css';
+import noData from './noData.svg';
+import { useNavigate } from 'react-router-dom';
 
 function SearchResults() {
   const location = useLocation();
   const [results, setResults] = useState([]);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+    const navigateHome = () => {
+        navigate('/home');
+    };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -54,8 +61,11 @@ function SearchResults() {
               <p>{book.author}</p>
             </li>
           ))
-        ) : (
+        ) : (<div className='not-found'>
+          <img src={noData} alt="Loading illustration" ></img>
           <p>No results found</p>
+          <button onClick={navigateHome} className="return-home">Return To Home</button>
+          </div>
         )}
       </ul>
     </div>
