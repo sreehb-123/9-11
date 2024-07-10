@@ -33,7 +33,6 @@ const BookDetails = () => {
             }
         };
         fetchBookDetails();
-        checkIfBookIsSaved();
     }, [id]);
 
     const handleIssue = async () => {
