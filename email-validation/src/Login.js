@@ -16,9 +16,8 @@ const Login = () => {
         event.preventDefault();
         try {
             const response = await axios.post('http://localhost:5000/validate-email', { username: email, password });
-            if (response.data.success) {
+            if (response.data.success){
                 console.log("Successful!!");
-                localStorage.setItem('userEmail', email);
                 navigate('/home');
             } else {
                 setMessage('Invalid credentials. Please try again.');

@@ -3,13 +3,11 @@ import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import './main.css';
 import { useNavigate } from 'react-router-dom';
-import { useParams } from "react-router-dom";
 
 function IssuedBooks() {
     const [issuedBooks, setIssuedBooks] = useState([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
-    const { email } = useParams(); 
 
     const navigateHome = () => {
         navigate('/home');
@@ -18,7 +16,7 @@ function IssuedBooks() {
     useEffect(() => {
         const fetchIssuedBooks = async () => {
             try {
-                const response = await fetch(`http://localhost:5000/issued-books?email=${email}`);
+                const response = await fetch('http://localhost:5000/issued-books');
                 const data = await response.json();
                 setIssuedBooks(data);
             } catch (error) {
@@ -29,7 +27,7 @@ function IssuedBooks() {
         };
 
         fetchIssuedBooks();
-    }, [email]);
+    }, []);
 
     if (loading) return <p>Loading...</p>;
 

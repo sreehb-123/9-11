@@ -31,7 +31,6 @@ const Book = mongoose.model('Book',bookSchema);
 
 const issuedBookSchema = new mongoose.Schema({
     bookId: mongoose.Schema.Types.ObjectId,
-    userEmail: String,
     title: String,
     author: String,
     issueDate: Date
@@ -128,7 +127,6 @@ app.get('/department/:dept', async (req, res) => {
 
 app.post('/issue-book/:id', async (req, res) => {
     const { id } = req.params;
-    const { email } = req.body;
     try {
         const book = await Book.findById(id);
         if (!book) {
@@ -144,7 +142,6 @@ app.post('/issue-book/:id', async (req, res) => {
 
         const issuedBook = new IssuedBook({
             bookId: book._id,
-            userEmail: email,
             title: book.title,
             author: book.author,
             issueDate: new Date()
@@ -159,10 +156,9 @@ app.post('/issue-book/:id', async (req, res) => {
 });
 
 app.get('/issued-books', async (req, res) => {
-    const {email} = req.query;
     try {
         console.log('Fetching issued books...');
-        const issuedBooks = await IssuedBook.find({ userEmail:email });
+        const issuedBooks = await IssuedBook.find();
         res.json(issuedBooks);
     } catch (error) {
         console.error('Error fetching issued books:', error);
@@ -172,7 +168,6 @@ app.get('/issued-books', async (req, res) => {
 
 app.post('/return-book/:id', async (req, res) => {
     const { id } = req.params;
-    const { email } = req.body;
     try {
         const book = await Book.findById(id);
         if (!book) {
@@ -180,7 +175,7 @@ app.post('/return-book/:id', async (req, res) => {
         }
         book.count += 1;
         await book.save();
-        await IssuedBook.findOneAndDelete({ bookId: id, userEmail: email });
+        await IssuedBook.findOneAndDelete({ bookId: id });
         res.json({ book });
     } catch (error) {
         console.error('Error returning book:', error);
@@ -196,16 +191,6 @@ app.get('/notifications/:userId', async (req, res) => {
         res.json(overdueBooks);
     } catch (error) {
         console.error('Error fetching notifications:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-});
-
-app.delete('/clear-issued-books', async (req,res) => {
-    try{
-        await IssuedBook.deleteMany({});
-        res.json({ message: 'All issued books have been cleared.' });
-    } catch (error) {
-        console.error('Error clearing issued books:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
