@@ -38,6 +38,15 @@ const issuedBookSchema = new mongoose.Schema({
 
 const IssuedBook = mongoose.model('IssuedBook', issuedBookSchema);
 
+const savedBookSchema = new mongoose.Schema({
+    bookId: mongoose.Schema.Types.ObjectId,
+    title: String,
+    author: String,
+});
+
+const SavedBook = mongoose.model('SavedBook', savedBookSchema);
+module.exports = { Book, SavedBook };
+
 const Notification = mongoose.model('Notification',new mongoose.Schema({
     userId: String,
     message: String,
@@ -179,6 +188,75 @@ app.post('/return-book/:id', async (req, res) => {
         res.json({ book });
     } catch (error) {
         console.error('Error returning book:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+app.post('/save-book/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        console.log(`Fetching book with ID: ${id}`);
+        const book = await Book.findById(id);
+        if (!book) {
+            return res.status(404).json({ error: 'Book not found' });
+        }
+
+        console.log(`Checking if the book is already saved`);
+        const existingSavedBook = await SavedBook.findOne({ bookId: book._id });
+        if (existingSavedBook) {
+            console.log('Book is already saved');
+            return res.status(400).json({ error: 'This book has already been saved' });
+        }
+
+        console.log('Saving new book');
+        const savedBook = new SavedBook({
+            bookId: book._id,
+            title: book.title,
+            author: book.author,
+        });
+        await savedBook.save();
+
+        console.log('Book saved successfully');
+        const savedBooks = await SavedBook.find();
+        console.log('Current state of saved books:', savedBooks);
+        res.json({ message: 'Book saved successfully', book });
+    } catch (error) {
+        console.error('Error saving book:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+// Endpoint to get saved books
+app.get('/saved-books', async (req, res) => {
+    try {
+        console.log('Fetching saved books...');
+        const savedBooks = await SavedBook.find();
+        res.json(savedBooks);
+    } catch (error) {
+        console.error('Error fetching saved books:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+// POST endpoint to un-save a book by ID
+app.delete('/unsave-book/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        console.log(`Un-saving book with ID: ${id}`);
+
+        const book = await SavedBook.findOne({ bookId: id });
+        
+        if (!book) {
+            console.log(`Book with ID ${id} not found in saved books`);
+            return res.status(404).json({ error: 'Book not found in saved books' });
+        }
+
+        await book.save();
+        await SavedBook.findOneAndDelete({ bookId: id });
+        console.log('Book un-saved successfully');
+        res.json({ message: 'Book un-saved successfully', book });
+    } catch (error) {
+        console.error('Error un-saving book:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
