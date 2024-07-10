@@ -22,28 +22,43 @@ const BookDetails = () => {
     };
 
     useEffect(() => {
-        const fetchBookDetails = async () => {
+        const fetchBook = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/book/${id}`);
-                setBook(response.data);
-                setLoading(false);
+                const response = await fetch(`http://localhost:5000/book/${id}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                console.log('Fetched book details:', data);
+                setBook(data);
+                const issuedResponse = await fetch(`http://localhost:5000/issued-books`);
+                const issuedBooks = await issuedResponse.json();
+                setIsIssued(issuedBooks.some(issuedBook => issuedBook.bookId === data._id));
             } catch (error) {
-                console.error('Error fetching book details:', error);
+                console.error('Error fetching details:', error);
+            } finally {
                 setLoading(false);
             }
         };
-        fetchBookDetails();
+
+        fetchBook();
     }, [id]);
 
     const handleIssue = async () => {
         try {
-            const response = await axios.post(`http://localhost:5000/issue-book/${id}`);
-            if (response.status === 200) {
-                setBook(response.data.book);
+            const response = await fetch(`http://localhost:5000/issue-book/${id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const data = await response.json();
+            if (response.ok) {
+                setBook(data.book);
                 setIsIssued(true);
                 alert('Book issued successfully');
             } else {
-                alert(response.data.error || 'Failed to issue book');
+                alert(data.error || 'Failed to issue book');
             }
         } catch (error) {
             console.error('Error issuing book:', error);
@@ -53,13 +68,19 @@ const BookDetails = () => {
 
     const handleReturn = async () => {
         try {
-            const response = await axios.post(`http://localhost:5000/return-book/${id}`);
-            if (response.status === 200) {
-                setBook(response.data.book);
+            const response = await fetch(`http://localhost:5000/return-book/${id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const data = await response.json();
+            if (response.ok) {
+                setBook(data.book);
                 setIsIssued(false);
                 alert('Book returned successfully');
             } else {
-                alert(response.data.error || 'Failed to return book');
+                alert(data.error || 'Failed to return book');
             }
         } catch (error) {
             console.error('Error returning book:', error);
