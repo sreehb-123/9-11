@@ -8,8 +8,6 @@ import DeptBooks from './components/DeptBooks';
 import SearchResults from './components/searchResults';
 import IssuedBooks from './components/IssuedBooks';
 import Notificaions from './pages/Notifications';
-import SavedBooks from './components/savedBooks';
-
 function App() {
   return (
     <Router>
@@ -19,7 +17,6 @@ function App() {
         <Route path="/book/:id" element={<BookDetails />} />
         <Route path="/department/:dept" element={<DeptBooks />} />
         <Route path="/issued-books" element={<IssuedBooks />} />
-        <Route path="/saved-books" element={<SavedBooks />}/>
         <Route path="/notifications" element={<Notificaions />} />
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />

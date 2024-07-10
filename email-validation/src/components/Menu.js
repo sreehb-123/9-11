@@ -29,10 +29,6 @@ function Menu() {
         navigate('/issued-books');
     };
 
-     const showSavedBooks = () => {
-        navigate('/saved-books');
-    };
-
     const notificationsPage = () => {
         navigate('/notifications');
     };
@@ -78,7 +74,7 @@ function Menu() {
                             </button>
                         </li>
                         <li>
-                           <button onClick={showSavedBooks}>
+                           <button>
                                 <i className="bx bxs-bookmark"></i> Saved
                             </button>
                         </li>
