@@ -2,10 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import './main.css';
+import { useNavigate } from 'react-router-dom';
 
 function IssuedBooks() {
     const [issuedBooks, setIssuedBooks] = useState([]);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
+
+    const navigateHome = () => {
+        navigate('/home');
+    };
 
     useEffect(() => {
         const fetchIssuedBooks = async () => {
@@ -25,7 +31,17 @@ function IssuedBooks() {
 
     if (loading) return <p>Loading...</p>;
 
-    if (!issuedBooks.length) return <p>No issued books found.</p>;
+    if (!issuedBooks.length) {return (
+        <>
+            <div className="NAVBAR">
+                <Navbar />
+            </div>
+            <div className='none'>
+                    <p>No issued books</p>
+                    <button onClick={navigateHome} className="return-home">Return To Home</button>
+                </div>
+        </>
+    )};
 
     return (
         <>
