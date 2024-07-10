@@ -14,6 +14,9 @@
     color: #3c1361;
     top: 50px;
 }
+.branch-container p{
+  font-family: 'Architects Daughter';
+}
 .branch-container ul{
     display: flex;
     flex-wrap: wrap;
@@ -33,6 +36,13 @@
     background-color: #9d88af;
     font-family: 'Architects Daughter';
     color: #fff;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+.branch-container i{
+  font-size: 90px;
 }
 .branch-container button:hover {
     background: #978897;
@@ -58,80 +68,81 @@
     top: 0;
     z-index: 1000;
     width: 100%;
+    margin-top: auto;
 }
 
 /*bookDetails*/
 .book-details {
-    background-color: #f0f0f0;
-    padding: 20px;
-    border-radius: 25px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin: 20px;
-    font-family: 'Architects Daughter';
-    width: 80vw;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    margin: 10px auto;
-    transform: translateY(25%);
-  }
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 25px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  font-family: 'Architects Daughter';
+  width: 80vw;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 10px auto;
+  transform: translateY(18%);
+}
+
+.book-details h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
   
-  .book-details h1 {
-    font-size: 28px;
-    margin-bottom: 10px;
-    
-  }
+}
+
+.book-details .info {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: row;
+}
+.book-details .info div{
+  width: 40%;
+}
+.book-details .info p {
+  margin-bottom: 8px;
+  font-family: 'Architects Daughter';
+}
+
+.book-details .info strong {
+  font-weight: bold;
+}
+
+.book-details .info p:last-child {
+  margin-bottom: 0;
+}
+.book-img{
+  width: 40%;
+  background: transparent;
+  margin-right: 25px;
+  background-size: cover; /* Ensure the background image covers the entire div */
+  background-position: center;
   
-  .book-details .info {
-    margin-top: 15px;
-    display: flex;
-    flex-direction: row;
-  }
-  .book-details .info div{
-    width: 40%;
-  }
-  .book-details .info p {
-    margin-bottom: 8px;
-    font-family: 'Architects Daughter';
-  }
   
-  .book-details .info strong {
-    font-weight: bold;
-  }
-  
-  .book-details .info p:last-child {
-    margin-bottom: 0;
-  }
-  .book-img{
-    width: 40%;
-    background: transparent;
-    margin-right: 25px;
-    background-size: cover; /* Ensure the background image covers the entire div */
-    background-position: center;
-    
-    
-  }
-  .bookImg{
-    margin: 23px;
-    width: 90%;
-    height: 80%;
-  }
-  .book-btn{
-    height: 40px;
-    width: 100px;
-    background-color: #9d88af;
-    border-radius: 25px;
-    border: none;
-    font-family: 'Architects Daughter';
-    font-size: 23px;
-  }
-  .book-btn:hover{
-    cursor: pointer;
-  }
-  #issue:hover{
-    transform: scale(1.2);
-  }
+}
+.bookImg{
+  margin: 23px;
+  width: 90%;
+  height: 80%;
+}
+.book-btn{
+  height: 40px;
+  width: 100px;
+  background-color: #9d88af;
+  border-radius: 25px;
+  border: none;
+  font-family: 'Architects Daughter';
+  font-size: 23px;
+}
+.book-btn:hover{
+  cursor: pointer;
+}
+#issue:hover{
+  transform: scale(1.2);
+}
   /*deptBooks issued books*/
   .books {
     position: relative;
@@ -208,7 +219,7 @@
   }
   .navigation{
     position: absolute;
-    top: 110px;
+    top: 85px;
     left: 20px;
   }
   .nav-btn{
@@ -223,7 +234,7 @@
   }
   
   .search-results {
-    max-width: 80%;
+    width: 80%;
     margin: 20px auto; 
     padding: 20px;
     background: transparent;
@@ -288,4 +299,54 @@
     font-weight: bold;
     margin-bottom: 10px;
   }
-  
+ 
+  .none{
+    background-color: #d8d8f6;
+    width: 100vw;
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 200px;
+    transform: translateY(-50%);
+    
+  }
+  .none p{
+    font-family: 'Architects Daughter';
+    font-size: 35px;
+  }
+  .none i{
+    font-size: 80px;
+    color: #3c1361;
+    height: 100px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .return-home{
+    width: 200px;
+    height: 40px;
+    background-color:#BC5FEC;
+    border: none;
+    font-family: 'Architects Daughter';
+    font-size: 20px;
+    border-radius: 25px;
+  }
+
+  .not-found{
+    background-color: #d8d8f6;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(-10%);
+  }
+  .not-found p{
+    color: #3c1361;
+    font-size: 25px;
+    margin-top: 0;
+    transform: translateY(-80%);
+  }
