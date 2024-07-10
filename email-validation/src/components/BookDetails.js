@@ -10,6 +10,7 @@ function BookDetails() {
     const [book, setBook] = useState(null);
     const [loading, setLoading] = useState(true);
     const [isIssued, setIsIssued] = useState(false);
+    const [isSaved, setIsSaved] = useState(false);
     const navigate = useNavigate();
 
     const navigateHome = () => {
@@ -37,6 +38,31 @@ function BookDetails() {
                 console.error('Error fetching details:', error);
             } finally {
                 setLoading(false);
+            }
+        };
+
+        fetchBook();
+    }, [id]);
+
+    useEffect(() => {
+        const fetchBook = async () => {
+            try {
+                const response = await fetch(`http://localhost:5000/book/${id}`);
+                const data = await response.json();
+                setBook(data);
+                const savedResponse = await fetch(`http://localhost:5000/saved-books`);
+                if (!savedResponse.ok) {
+                    const errorData = await savedResponse.json();
+                    console.error('Error fetching saved books:', errorData.error);
+                    return;
+                }
+                const savedBooks = await savedResponse.json();
+                const isBookSaved = savedBooks.some(savedBook => savedBook.bookId === data._id);
+    
+                setIsSaved(isBookSaved);
+                console.log('Book fetched:', data);
+            } catch (error) {
+                console.error('Error fetching book:', error);
             }
         };
 
@@ -74,6 +100,7 @@ function BookDetails() {
                 }
             });
             const data = await response.json();
+            
             if (response.ok) {
                 setBook(data.book);
                 setIsIssued(false);
@@ -86,6 +113,56 @@ function BookDetails() {
             alert('Failed to return book');
         }
     };
+
+    const handleSave = async (id) => {
+        try {
+          const response = await fetch(`http://localhost:5000/save-book/${id}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+      
+          if (!response.ok) {
+            const errorData = await response.json(); // Read error response here
+            console.error('Error saving book:', errorData.error);
+            return; // Exit function on error
+          }
+      
+          const data = await response.json(); // Read success response here
+          console.log('Response:', data);
+      
+          setBook(data.book);
+          setIsSaved(true);
+        } catch (error) {
+          console.error('Error saving book:', error);
+        }
+      };
+      
+
+      const handleUnsave = async () => {
+        try {
+            const response = await fetch(`http://localhost:5000/unsave-book/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const data = await response.json(); // Parse the response body as JSON
+            console.log(data); 
+            if (response.ok) {
+                setBook(null);
+                setIsSaved(false);
+                alert('Book unsaved successfully');
+            } else {
+                alert(data.error || 'Failed to unsave book');
+            }
+        } catch (error) {
+            console.error('Error un-saving book:', error);
+        }
+    };
+    
+      
     
     if (loading) {
         return <p>Loading...</p>;
@@ -126,6 +203,11 @@ function BookDetails() {
                         <p><button onClick={handleReturn} className="book-btn">RETURN</button></p>
                     ) : (
                         <p><button onClick={handleIssue} className="book-btn">ISSUE</button></p>
+                    )}
+                    {isSaved ? (
+                        <p><button onClick={handleUnsave} className="book-btn">Unsave</button></p>
+                    ) : (
+                        <p><button onClick={handleSave} className="book-btn">Save</button></p>
                     )}
                     </div>
                 </div>
