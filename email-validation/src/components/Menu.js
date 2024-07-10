@@ -29,8 +29,8 @@ function Menu() {
         navigate('/issued-books');
     };
 
-    const notificationsPage = () => {
-        navigate('/notifications');
+    const showSavedBooks = () => {
+        navigate('/saved-books');
     };
 
     useEffect(() => {
@@ -64,8 +64,8 @@ function Menu() {
                             </button>
                         </li>
                         <li>
-                            <button onClick={notificationsPage}>
-                                <i className="bx bxs-bell"></i> Notifications
+                            <button>
+                                <i className="bx bxs-bell"></i> Notification
                             </button>
                         </li>
                         <li>
@@ -74,7 +74,7 @@ function Menu() {
                             </button>
                         </li>
                         <li>
-                            <button>
+                            <button onClick={showSavedBooks}>
                                 <i className="bx bxs-bookmark"></i> Saved
                             </button>
                         </li>
