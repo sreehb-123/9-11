@@ -2,10 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar'
 import '../components/main.css';
+import 'boxicons/css/boxicons.min.css';
+import { useNavigate } from 'react-router-dom';
 
 function Notifications() {
     const [notifications, setNotifications] = useState([]);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
+
+    const navigateHome = () => {
+        navigate('/home');
+    };
 
     useEffect(() => {
         const fetchNotifications = async () => {
@@ -26,18 +33,36 @@ function Notifications() {
         fetchNotifications();
     }, []);
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) {return (
+        <>
+        <div className='NAVBAR'>
+                    <Navbar />
+                </div>
+                <p>lodaing...</p>
+        </>
+    )};
 
-    if (!notifications.length) return <p>No notifications found.</p>;
+    if (!notifications.length) {
+        return (<>
+                <div className='NAVBAR'>
+                    <Navbar />
+                </div>
+                <div className='none'>
+                    <i className="bx bxs-bell" ></i>
+                    
+                    <p>No notifications here</p>
+                    <button onClick={navigateHome} className="return-home">Return To Home</button>
+                </div>
+            </>);}
 
     return (
         <>
             <div className="NAVBAR">
                 <Navbar />
             </div>
-            <div className="notifications">
+            <div className="books" id="notifications">
                 <h2>Notifications</h2>
-                <ul>
+                <ul className="bookList">
                     {notifications.map(book => (
                         <li key={book._id}>
                             <h2>
