@@ -188,7 +188,7 @@ app.post('/return-book/:id', async (req, res) => {
     }
 });
 
-app.get('/notifications', async (req, res) => {
+app.get('/notifications/:userId', async (req, res) => {
     try {
         const overdueBooks = await IssuedBook.find({
             issueDate: { $lt: new Date(Date.now() - FIFTEEN_DAYS_IN_MS) }
