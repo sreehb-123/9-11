@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar'
 import '../components/main.css';
 import 'boxicons/css/boxicons.min.css';
@@ -9,6 +9,7 @@ function Notifications() {
     const [notifications, setNotifications] = useState([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+    const { email } = useParams();
 
     const navigateHome = () => {
         navigate('/home');
@@ -17,7 +18,7 @@ function Notifications() {
     useEffect(() => {
         const fetchNotifications = async () => {
             try {
-                const response = await fetch('http://localhost:5000/notifications/123');
+                const response = await fetch(`http://localhost:5000/notifications?email=${email}`);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -31,7 +32,7 @@ function Notifications() {
         };
 
         fetchNotifications();
-    }, []);
+    }, [email]);
 
     if (loading) {return (
         <>

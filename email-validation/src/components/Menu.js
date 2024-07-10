@@ -18,6 +18,7 @@ function Menu() {
     };
 
     const handleLogout = () => {
+        localStorage.removeItem('userEmail');
         navigate('/login');
     };
 
@@ -31,7 +32,8 @@ function Menu() {
     };
 
     const notificationsPage = () => {
-        navigate('/notifications');
+        const email = localStorage.getItem('userEmail');
+        navigate(`/notifications/${email}`);
     };
 
     useEffect(() => {

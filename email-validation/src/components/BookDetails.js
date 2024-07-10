@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import './main.css';
-import bookcover from "./bookcover.jpg";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useIssuanceStatus } from './IssuanceStatusContext';
+import bookcover from './bookcover.jpg';
 
-const BookDetails = () => {
+function BookDetails() {
     const { id } = useParams();
     const [book, setBook] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [isIssued, setIsIssued] = useState(false);
     const navigate = useNavigate();
+    const { addIssuedBook, removeIssuedBook, isBookIssued } = useIssuanceStatus();
 
     const navigateHome = () => {
         navigate('/home');
@@ -41,16 +42,15 @@ const BookDetails = () => {
             const response = await fetch(`http://localhost:5000/issue-book/${id}`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email })
+                body: JSON.stringify({ email }),
             });
-            const data = await response.json();
-            if (response.ok) {
-                setBook(data.book);
-                setIsIssued(true);
+            if (response.status === 200) {
+                addIssuedBook(id);
                 alert('Book issued successfully');
             } else {
+                const data = await response.json();
                 alert(data.error || 'Failed to issue book');
             }
         } catch (error) {
@@ -61,20 +61,14 @@ const BookDetails = () => {
 
     const handleReturn = async () => {
         try {
-            const email = localStorage.getItem('userEmail');
             const response = await fetch(`http://localhost:5000/return-book/${id}`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ email })
             });
-            const data = await response.json();
-            if (response.ok) {
-                setBook(data.book);
-                setIsIssued(false);
+            if (response.status === 200) {
+                removeIssuedBook(id);
                 alert('Book returned successfully');
             } else {
+                const data = await response.json();
                 alert(data.error || 'Failed to return book');
             }
         } catch (error) {
@@ -119,7 +113,7 @@ const BookDetails = () => {
                         <p><strong>Genre:</strong> {book.genre}</p>
                         <p><strong>Description:</strong> {book.description}</p>
                         <p><strong>Number of units left:</strong> {book.count}</p>
-                        {isIssued ? (
+                        {isBookIssued(id) ? (
                             <p><button onClick={handleReturn} className="book-btn">RETURN</button></p>
                         ) : (
                             <p><button onClick={handleIssue} className="book-btn">ISSUE</button></p>
