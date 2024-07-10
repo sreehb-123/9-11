@@ -329,7 +329,8 @@
   .return-home{
     width: 200px;
     height: 40px;
-    background-color:#BC5FEC;
+    color: white;
+    background-color:#3c1361;
     border: none;
     font-family: 'Architects Daughter';
     font-size: 20px;
