@@ -26,7 +26,8 @@ function Menu() {
     };
 
     const showIssuedBooks = () => {
-        navigate('/issued-books');
+        const email = localStorage.getItem('userEmail');
+        navigate(`/issued-books/${email}`);
     };
 
     const notificationsPage = () => {

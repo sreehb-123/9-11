@@ -4,7 +4,6 @@ import Navbar from "./Navbar";
 import './main.css';
 import bookcover from "./bookcover.jpg";
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 const BookDetails = () => {
     const { id } = useParams();
@@ -24,8 +23,9 @@ const BookDetails = () => {
     useEffect(() => {
         const fetchBookDetails = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/book/${id}`);
-                setBook(response.data);
+                const response = await fetch(`http://localhost:5000/book/${id}`);
+                const data = await response.json();
+                setBook(data);
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching book details:', error);
@@ -37,13 +37,21 @@ const BookDetails = () => {
 
     const handleIssue = async () => {
         try {
-            const response = await axios.post(`http://localhost:5000/issue-book/${id}`);
-            if (response.status === 200) {
-                setBook(response.data.book);
+            const email = localStorage.getItem('userEmail');
+            const response = await fetch(`http://localhost:5000/issue-book/${id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email })
+            });
+            const data = await response.json();
+            if (response.ok) {
+                setBook(data.book);
                 setIsIssued(true);
                 alert('Book issued successfully');
             } else {
-                alert(response.data.error || 'Failed to issue book');
+                alert(data.error || 'Failed to issue book');
             }
         } catch (error) {
             console.error('Error issuing book:', error);
@@ -53,13 +61,21 @@ const BookDetails = () => {
 
     const handleReturn = async () => {
         try {
-            const response = await axios.post(`http://localhost:5000/return-book/${id}`);
-            if (response.status === 200) {
-                setBook(response.data.book);
+            const email = localStorage.getItem('userEmail');
+            const response = await fetch(`http://localhost:5000/return-book/${id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email })
+            });
+            const data = await response.json();
+            if (response.ok) {
+                setBook(data.book);
                 setIsIssued(false);
                 alert('Book returned successfully');
             } else {
-                alert(response.data.error || 'Failed to return book');
+                alert(data.error || 'Failed to return book');
             }
         } catch (error) {
             console.error('Error returning book:', error);
