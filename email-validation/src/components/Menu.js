@@ -1,7 +1,6 @@
 import 'boxicons/css/boxicons.min.css';
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Search from './Search';
 import './Navbar.css';
 
 function Menu() {
@@ -18,6 +17,7 @@ function Menu() {
     };
 
     const handleLogout = () => {
+        localStorage.removeItem('userEmail');
         navigate('/login');
     };
 
@@ -26,7 +26,8 @@ function Menu() {
     };
 
     const showIssuedBooks = () => {
-        navigate('/issued-books');
+        const email = localStorage.getItem('userEmail');
+        navigate(`/issued-books/${email}`);
     };
 
     const notificationsPage = () => {

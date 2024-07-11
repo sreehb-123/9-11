@@ -4,7 +4,6 @@ import Navbar from "./Navbar";
 import './main.css';
 import bookcover from "./bookcover.jpg";
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 const BookDetails = () => {
     const { id } = useParams();
@@ -12,6 +11,8 @@ const BookDetails = () => {
     const [loading, setLoading] = useState(true);
     const [isIssued, setIsIssued] = useState(false);
     const navigate = useNavigate();
+
+    const email = localStorage.getItem('userEmail');
 
     const navigateHome = () => {
         navigate('/home');
@@ -31,7 +32,7 @@ const BookDetails = () => {
                 const data = await response.json();
                 console.log('Fetched book details:', data);
                 setBook(data);
-                const issuedResponse = await fetch(`http://localhost:5000/issued-books`);
+                const issuedResponse = await fetch(`http://localhost:5000/issued-books/${email}`);
                 const issuedBooks = await issuedResponse.json();
                 setIsIssued(issuedBooks.some(issuedBook => issuedBook.bookId === data._id));
             } catch (error) {
@@ -42,7 +43,7 @@ const BookDetails = () => {
         };
 
         fetchBook();
-    }, [id]);
+    }, [id, email]);
 
     const handleIssue = async () => {
         try {
@@ -50,7 +51,8 @@ const BookDetails = () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify({ email })
             });
             const data = await response.json();
             if (response.ok) {
@@ -72,7 +74,8 @@ const BookDetails = () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify({ email })
             });
             const data = await response.json();
             if (response.ok) {

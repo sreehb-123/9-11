@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const fs = require('fs');
-const { title } = require('process');
 const schedule = require('node-schedule');
 
 const app = express();
@@ -27,18 +26,19 @@ const bookSchema = new mongoose.Schema({
     description: String,
 });
 
-const Book = mongoose.model('Book',bookSchema);
+const Book = mongoose.model('Book', bookSchema);
 
 const issuedBookSchema = new mongoose.Schema({
     bookId: mongoose.Schema.Types.ObjectId,
     title: String,
     author: String,
-    issueDate: Date
+    issueDate: Date,
+    userEmail: String,
 });
 
 const IssuedBook = mongoose.model('IssuedBook', issuedBookSchema);
 
-const Notification = mongoose.model('Notification',new mongoose.Schema({
+const Notification = mongoose.model('Notification', new mongoose.Schema({
     userId: String,
     message: String,
     date: { type: Date, default: Date.now },
@@ -84,21 +84,20 @@ app.post('/validate-email', (req, res) => {
 
 app.get('/search', async (req, res) => {
     try {
-      const { q } = req.query;
-      const searchCriteria = {
-        $or: [
-            { title: new RegExp(q, 'i') },
-            { author: new RegExp(q, 'i') },
-            { genre: new RegExp(q, 'i') }
-        ]
-    };
-    const books = await Book.find(searchCriteria);
-    res.json(books);
+        const { q } = req.query;
+        const searchCriteria = {
+            $or: [
+                { title: new RegExp(q, 'i') },
+                { author: new RegExp(q, 'i') },
+                { genre: new RegExp(q, 'i') }
+            ]
+        };
+        const books = await Book.find(searchCriteria);
+        res.json(books);
     } catch (error) {
-      res.status(500).send({error: 'Internal Server Error'});
+        res.status(500).send({ error: 'Internal Server Error' });
     }
 });
-
 
 app.get('/book/:id', async (req, res) => {
     const { id } = req.params;
@@ -127,16 +126,17 @@ app.get('/department/:dept', async (req, res) => {
 
 app.post('/issue-book/:id', async (req, res) => {
     const { id } = req.params;
+    const { email } = req.body;
     try {
         const book = await Book.findById(id);
         if (!book) {
             return res.status(404).json({ error: 'Book not found' });
         }
-        
+
         if (book.count <= 0) {
             return res.status(400).json({ error: 'No units left to issue' });
         }
-        
+
         book.count -= 1;
         await book.save();
 
@@ -144,7 +144,8 @@ app.post('/issue-book/:id', async (req, res) => {
             bookId: book._id,
             title: book.title,
             author: book.author,
-            issueDate: new Date()
+            issueDate: new Date(),
+            userEmail: email
         });
         await issuedBook.save();
 
@@ -155,10 +156,11 @@ app.post('/issue-book/:id', async (req, res) => {
     }
 });
 
-app.get('/issued-books', async (req, res) => {
+app.get('/issued-books/:email', async (req, res) => {
+    const { email } = req.params;
     try {
         console.log('Fetching issued books...');
-        const issuedBooks = await IssuedBook.find();
+        const issuedBooks = await IssuedBook.find({ userEmail: email });
         res.json(issuedBooks);
     } catch (error) {
         console.error('Error fetching issued books:', error);
@@ -168,6 +170,7 @@ app.get('/issued-books', async (req, res) => {
 
 app.post('/return-book/:id', async (req, res) => {
     const { id } = req.params;
+    const { email } = req.body;
     try {
         const book = await Book.findById(id);
         if (!book) {
@@ -175,7 +178,7 @@ app.post('/return-book/:id', async (req, res) => {
         }
         book.count += 1;
         await book.save();
-        await IssuedBook.findOneAndDelete({ bookId: id });
+        await IssuedBook.findOneAndDelete({ bookId: id, userEmail: email });
         res.json({ book });
     } catch (error) {
         console.error('Error returning book:', error);
@@ -195,8 +198,8 @@ app.get('/notifications/:userId', async (req, res) => {
     }
 });
 
-app.delete('/clear-issued-books', async(req,res) => {
-    try{
+app.delete('/clear-issued-books', async (req, res) => {
+    try {
         await IssuedBook.deleteMany({});
         res.status(200).json({ message: 'Issued books cleared successfully' });
     } catch (error) {

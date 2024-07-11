@@ -4,20 +4,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
 import './Login.css';
 import logoImage from './iitdh logo.jpg'; 
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setLoading(true);
+        setMessage('');
         try {
             const response = await axios.post('http://localhost:5000/validate-email', { username: email, password });
-            if (response.data.success){
+            if (response.data.success) {
                 console.log("Successful!!");
+                localStorage.setItem('userEmail', email);
                 navigate('/home');
             } else {
                 setMessage('Invalid credentials. Please try again.');
@@ -25,12 +29,24 @@ const Login = () => {
         } catch (error) {
             setMessage('Server error. Please try again later.');
             console.error('Error:', error);
+        } finally {
+            setLoading(false);
         }
+    };
+
+    const handleEmailChange = (e) => {
+        setEmail(e.target.value);
+        setMessage('');
+    };
+
+    const handlePasswordChange = (e) => {
+        setPassword(e.target.value);
+        setMessage('');
     };
 
     return (
         <div className="login-container">
-            <img src={logoImage} alt="Logo" className="logo-image" />
+            <img src={logoImage} alt="IITDH Logo" className="logo-image" />
             <p><b>LOGIN TO THE WEBSITE</b></p>
             <form onSubmit={handleSubmit} className="login-form">
                 <label htmlFor="email" className="visually-hidden">Enter your e-mail id</label>
@@ -41,7 +57,7 @@ const Login = () => {
                         id="email"
                         placeholder="Enter your e-mail id"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={handleEmailChange}
                         required
                     />
                 </div>
@@ -53,11 +69,13 @@ const Login = () => {
                         id="password"
                         placeholder="Enter your password"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={handlePasswordChange}
                         required
                     />
                 </div>
-                <button type="submit">LOGIN</button>
+                <button type="submit" disabled={loading}>
+                    {loading ? 'Logging in...' : 'LOGIN'}
+                </button>
             </form>
             {message && <p className="message">{message}</p>}
         </div>
