@@ -43,6 +43,28 @@ function IssuedBooks() {
         }
     }, [email]);
 
+    const handleReturn = async (bookId) => {
+        try {
+            const response = await fetch(`http://localhost:5000/return-book/${bookId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email })
+            });
+            const data = await response.json();
+            if (response.ok) {
+                setIssuedBooks(issuedBooks.filter(book => book.bookId !== bookId));
+                alert('Book returned successfully');
+            } else {
+                alert(data.error || 'Failed to return book');
+            }
+        } catch (error) {
+            console.error('Error returning book:', error);
+            alert('Failed to return book');
+        }
+    };
+
     if (loading) return <div className="loading">Loading...</div>;
 
     if (error) {
@@ -81,17 +103,23 @@ function IssuedBooks() {
             <div className="books" id="issued-books">
                 <h2>Issued Books</h2>
                 <ul className="bookList">
-                    {issuedBooks.map(book => (
-                        <li key={book._id}>
-                            <h2>
-                                <Link to={`/book/${book.bookId}`} className="book-link">
-                                    {book.title}
-                                </Link>
-                            </h2>
-                            <p><strong>Author:</strong> {book.author}</p>
-                            <p><strong>Issue Date:</strong> {new Date(book.issueDate).toLocaleDateString()}</p>
-                        </li>
-                    ))}
+                    {issuedBooks.map(book => {
+                        const issueDate = new Date(book.issueDate);
+                        const dueDate = new Date(issueDate.getTime() + 15 * 24 * 60 * 60 * 1000);
+                        return (
+                            <li key={book._id}>
+                                <h2>
+                                    <Link to={`/book/${book.bookId}`} className="book-link">
+                                        {book.title}
+                                    </Link>
+                                </h2>
+                                <p><strong>Author:</strong> {book.author}</p>
+                                <p><strong>Issue Date:</strong> {issueDate.toLocaleDateString()}</p>
+                                <p><strong>Due Date:</strong> {dueDate.toLocaleDateString()}</p>
+                                <button onClick={() => handleReturn(book.bookId)}>RETURN</button>
+                            </li>
+                        );
+                    })}
                 </ul>
             </div>
         </>
