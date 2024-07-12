@@ -39,19 +39,24 @@ const issuedBookSchema = new mongoose.Schema({
 const IssuedBook = mongoose.model('IssuedBook', issuedBookSchema);
 
 const Notification = mongoose.model('Notification', new mongoose.Schema({
-    userId: String,
+    userEmail: String,
     message: String,
     date: { type: Date, default: Date.now },
 }));
 
-const FIFTEEN_DAYS_IN_MS = 15 * 24 * 60 * 60 * 1000;
+const ONE_MIN_IN_MS = 1 * 60 * 1000;
 
-schedule.scheduleJob('0 0 * * *', async () => {
+schedule.scheduleJob('*/1 * * * *', async () => {
     try {
         const overdueBooks = await IssuedBook.find({
-            issueDate: { $lt: new Date(Date.now() - FIFTEEN_DAYS_IN_MS) }
+            issueDate: { $lt: new Date(Date.now() - ONE_MIN_IN_MS) }
         });
-        overdueBooks.forEach(book => {
+        overdueBooks.forEach(async (book) => {
+            const notification = new Notification({
+                userEmail: book.userEmail,
+                message: `Book titled "${book.title}" is overdue.`
+            });
+            await notification.save();
             console.log(`Notification: Book titled "${book.title}" is overdue.`);
         });
     } catch (error) {
@@ -186,10 +191,12 @@ app.post('/return-book/:id', async (req, res) => {
     }
 });
 
-app.get('/notifications/:userId', async (req, res) => {
+app.get('/notifications/:email', async (req, res) => {
+    const { email } = req.params;
     try {
         const overdueBooks = await IssuedBook.find({
-            issueDate: { $lt: new Date(Date.now() - FIFTEEN_DAYS_IN_MS) }
+            userEmail: email,
+            issueDate: { $lt: new Date(Date.now() - ONE_MIN_IN_MS) }
         });
         res.json(overdueBooks);
     } catch (error) {

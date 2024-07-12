@@ -31,7 +31,8 @@ function Menu() {
     };
 
     const notificationsPage = () => {
-        navigate('/notifications');
+        const email = localStorage.getItem('userEmail');
+        navigate(`/notifications/${email}`);
     };
 
     useEffect(() => {
