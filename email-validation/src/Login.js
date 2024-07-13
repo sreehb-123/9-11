@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import './Login.css';
 import logoImage from './iitdh logo.jpg'; 
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +12,12 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -65,14 +71,17 @@ const Login = () => {
                 <div className="input-with-icon">
                     <FontAwesomeIcon icon={faLock} className="input-icon" />
                     <input
-                        type="password"
+                        type={showPassword ? 'text' : 'password'}
                         id="password"
                         placeholder="Enter your password"
                         value={password}
-                        onChange={handlePasswordChange}
+                        onChange={(e) => setPassword(e.target.value)}
                         required
                     />
-                </div>
+                    <button type="button" onClick={togglePasswordVisibility}>
+                        <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
+                    </button>
+                    </div>
                 <button type="submit" disabled={loading}>
                     {loading ? 'Logging in...' : 'LOGIN'}
                 </button>
@@ -83,3 +92,6 @@ const Login = () => {
 };
 
 export default Login;
+
+
+
