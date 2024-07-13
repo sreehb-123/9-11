@@ -24,6 +24,12 @@ const bookSchema = new mongoose.Schema({
     count: Number,
     department: String,
     description: String,
+    ratings: [{
+        user: String, // User who gave the rating/review
+        rating: Number, // Rating given (e.g., 1-5 stars)
+        review: String, // Review text
+        date: { type: Date, default: Date.now } // Date of the rating/review
+    }]
 });
 
 const Book = mongoose.model('Book', bookSchema);
@@ -76,6 +82,7 @@ fs.readFile('users.json', 'utf8', (err, data) => {
 const checkCredentials = (username, password) => {
     return users.some(user => user.username === username && user.password === password);
 };
+
 
 app.post('/validate-email', (req, res) => {
     const { username, password } = req.body;
@@ -187,6 +194,55 @@ app.post('/return-book/:id', async (req, res) => {
         res.json({ book });
     } catch (error) {
         console.error('Error returning book:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+app.post('/add-rating/:id', async (req, res) => {
+    const { id } = req.params;
+    const { userEmail, rating, review } = req.body;
+
+    try {
+        const book = await Book.findById(id);
+        if (!book) {
+            return res.status(404).json({ error: 'Book not found' });
+        }
+
+        const existingRating = book.ratings.find(r => r.user === userEmail);
+        if (existingRating) {
+            existingReview.rating = rating;
+            existingReview.review = review;
+        }
+        else{
+            book.ratings.push({ user: userEmail, rating, review });
+        }
+        await book.save();
+
+        res.json({ message: 'Rating and review added successfully', book });
+    } catch (error) {
+        console.error('Error adding rating and review:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+app.get('/book-reviews/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const book = await Book.findById(id);
+        if (!book) {
+            return res.status(404).json({ error: 'Book not found' });
+        }
+
+        const reviews = book.ratings.map(rating => ({
+            user: rating.user,
+            rating: rating.rating,
+            review: rating.review,
+            date: rating.date
+        }));
+
+        res.json({ reviews }); 
+    } catch (error) {
+        console.error('Error fetching reviews:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
