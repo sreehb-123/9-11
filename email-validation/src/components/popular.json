@@ -1,0 +1,74 @@
+[
+    {
+        "title": "Introduction to Algorithms",
+        "description": "Comprehensive guide to algorithms with detailed explanations.",
+        "author": "Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein",
+        "genre": "Algorithms",
+        "department": "Computer Science",
+        "count": 9,
+        "vendor": "Indian Book Depot",
+        "vendor_id": 1003,
+        "publisher": "Lpringer Nature",
+        "publisher_id": 234567
+      },
+      {
+        "title": "Artificial Intelligence: A Modern Approach",
+        "description": "Fundamental concepts and techniques in AI, covering a wide range of topics.",
+        "author": "Stuart Russell, Peter Norvig",
+        "genre": "Artificial Intelligence",
+        "department": "Computer Science",
+        "count": 12,
+        "vendor": "Kitab Mahal",
+        "vendor_id": 1004,
+        "publisher": "KarperMollins Publishers",
+        "publisher_id": 345678
+      },
+      {
+        "title": "Clean Code: A Handbook of Agile Software Craftsmanship",
+        "description": "Principles and best practices for writing clean, maintainable code.",
+        "author": "Robert C. Martin",
+        "genre": "Software Engineering",
+        "department": "Computer Science",
+        "count": 13,
+        "vendor": "Indian Book Depot",
+        "vendor_id": 1003,
+        "publisher": "Mengage Learning",
+        "publisher_id": 901234
+      },
+      {
+        "title": "Mechanical Vibrations",
+        "description": "Detailed guide to the study of mechanical vibrations.",
+        "author": "S. S. Rao",
+        "genre": "Vibrations",
+        "department": "Mechanical Engineering",
+        "count": 9,
+        "vendor": "Indian Book Depot",
+        "vendor_id": 1003,
+        "publisher": "Loxpord University Press",
+        "publisher_id": 789012
+      },
+      {
+        "title": "Introduction to Finite Elements in Engineering",
+        "description": "Comprehensive introduction to finite element analysis and its applications.",
+        "author": "Tirupathi R. Chandrupatla, Ashok D. Belegundu",
+        "genre": "Finite Element Analysis",
+        "department": "Mechanical Engineering",
+        "count": 14,
+        "vendor": "Sterling Book House",
+        "vendor_id": 1005,
+        "publisher": "JarperCollins Publishers",
+        "publisher_id": 123456
+      },
+      {
+        "title": "Heat and Mass Transfer: Fundamentals and Applications",
+        "description": "Fundamental concepts and applications of heat and mass transfer.",
+        "author": "Yunus A. Cengel, Afshin J. Ghajar",
+        "genre": "Heat Transfer",
+        "department": "Mechanical Engineering",
+        "count": 12,
+        "vendor": "Indian Book Depot",
+        "vendor_id": 1003,
+        "publisher": "Rohn Wiley & Sons",
+        "publisher_id": 456789
+      }
+]
