@@ -50,14 +50,95 @@
     transform: scale(1.1);
     cursor: pointer;
   }
+/*display*/
 .display{
-    background-color: antiquewhite;
-    width: 75%;
+    background-color: #d8d8f6;
+    width: 68%;
     margin-left: 20px;
-    margin-top: 30px;
+    margin-top: 10px;
     height: 100vh;
     border-radius: 25px;
+    position: absolute;
+    top: 75px;
+    display: flex;
+    flex-direction: column;
 }
+.lines{
+  background-color: #d8d8f6;
+  position: relative;
+  top: 0px;
+  left: 25px;
+  width: 85%;
+  height: 30%;
+  margin-top: 0%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+.lines h3{
+  position: relative;
+  margin-top: 10px;
+  font-size: 30px;
+  color: #3c1361;
+  background-color: #d8d8f6;
+  margin-bottom: 0px;
+  font-family: 'Inika',serif;
+}
+.lines p{
+  font-size: 20px;
+  position: relative;
+  margin-top: 0px;
+  background-color: #d8d8f6;
+  font-family: 'Architects Daughter';
+}
+.book-scroll {
+  margin-top: 0px;
+  width: 100%;
+  position: relative;
+  
+}
+.book-scroll p{
+  
+  margin-bottom: 1px;
+  margin-top: 0%;
+}
+.book-card {
+  padding: 10px;
+  margin: 0 10px;
+  border-radius: 5px;
+  text-align: center;
+  height: 280px;
+  background-color: white;
+}
+.book-card h4{
+  font-family: 'Inika';
+}
+.book-card p {
+  margin-top: 0;
+  font-size: medium;
+  font-family: 'Architects Daughter';
+  
+}
+
+.popular-book-img {
+  background-color: #9d88af;
+  width: 120px;
+  height: 150px;
+  margin: 0 auto 10px;
+}
+
+.book-card:hover{
+  transform: scale(1.1);
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.15); 
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.slick-slide > div {
+  margin: 0 4cqb 2cqb 3cqb;
+}
+
 @media (max-width: 991px) {
   .branch-container{
     top: 100px;
@@ -71,21 +152,31 @@
     margin-top: auto;
 }
 
+
 /*bookDetails*/
+.book-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: #d8d8f6;
+  min-height: 100vh; 
+  padding: 20px; 
+}
 .book-details {
   background-color: #f0f0f0;
   padding: 20px;
   border-radius: 25px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin: 20px;
+  margin: 20px auto;
   font-family: 'Architects Daughter';
   width: 80vw;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  margin: 10px auto;
-  transform: translateY(18%);
+  margin: 100px auto;
+  transform: translateY(60%);
 }
 
 .book-details h1 {
@@ -101,6 +192,7 @@
 }
 .book-details .info div{
   width: 40%;
+  margin-left: 0%;
 }
 .book-details .info p {
   margin-bottom: 8px;
@@ -120,8 +212,6 @@
   margin-right: 25px;
   background-size: cover; /* Ensure the background image covers the entire div */
   background-position: center;
-  
-  
 }
 .bookImg{
   margin: 23px;
@@ -143,6 +233,114 @@
 #issue:hover{
   transform: scale(1.2);
 }
+.review-box{
+  
+  margin-top: 150px;
+  margin-right: auto;
+  width: 100%;
+  transform: translateY(30%);
+}
+.output{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.output li{
+  background-color: #9d88af;
+  width: 65vw;
+  border-radius: 5px;
+  border: none;
+  margin-left: 0px;
+}
+.output h2{
+  font-family: 'Inika';
+  font-size: 25px;
+  margin-bottom: 0;
+}
+.output p{
+  font-family: 'Architects Daughter';
+  list-style: none;
+  font-size: 18px;
+  margin:auto;
+  
+}
+.input-review{
+  display: flex;
+  flex-direction: column;
+  background-color: #d8d8f6;
+}
+.input-review p{
+  font-family: 'Inika';
+  font-size: 25px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.input-review .review{
+  font-size: 20px;
+  font-family: 'Architects Daughter';
+  margin-top: 0;
+  margin-left: 10px;
+  
+}
+.input-review textarea{
+  width: 60%;
+  min-height: 50px;
+  border-radius: 15px;
+  background-color: #fff;
+  margin-left: 20px;
+  font-family: 'Architects Daughter';
+}
+.input-review button{
+  width: 120px;
+  height: 40px;
+  margin-bottom: 10px;
+  margin-left: 50px;
+  transform: translateX(150%);
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Architects Daughter';
+  font-size: 16px;
+  color: #3c1361;
+  background-color: #9d88af;
+}
+.input-review button:hover{
+  background-color: #fff;
+}
+.star-rating {
+  display: flex;
+  flex-direction: row;
+ 
+}
+
+.star-rating button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0 0 0 10px ;
+  width: 20px;
+}
+.star-rating button:hover{
+  background:none;
+  
+}
+.star {
+  font-size: 30px;
+  color: #ddd;
+  transition: color 0.2s;
+}
+
+.star-rating .on .star {
+  color: #3c1361;
+}
+
+.star-rating .off .star {
+  color: #9d88af;
+}
+
+
   /*deptBooks issued books*/
   .books {
     position: relative;
@@ -338,6 +536,12 @@
     cursor: pointer;
   }
 
+  .return-home:hover {
+    background: #9d88af;
+    border-radius: 5px;
+    transform: scale(1.1);
+  }
+
   .not-found{
     background-color: #d8d8f6;
     display: flex;
@@ -351,4 +555,14 @@
     font-size: 25px;
     margin-top: 0;
     transform: translateY(-80%);
+  }
+  #return-btn{
+    background-color: #9d88af;
+    border: none;
+    width: 25%;
+    height: 15%;
+    border-radius: 25px;
+    font-family: 'Architects Daughter';
+    font-size: 18px;
+    transform: translateX(150%);
   }
