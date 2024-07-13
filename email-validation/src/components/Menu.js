@@ -75,11 +75,6 @@ function Menu() {
                                 <i className="bx bxs-book"></i> Issued books
                             </button>
                         </li>
-                        <li>
-                           <button>
-                                <i className="bx bxs-bookmark"></i> Saved
-                            </button>
-                        </li>
                     </ul>
                     
                     <div className="sidebar-footer">
