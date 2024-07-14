@@ -53,7 +53,7 @@
 /*display*/
 .display{
     background-color: #d8d8f6;
-    width: 68%;
+    width: 65%;
     margin-left: 20px;
     margin-top: 10px;
     height: 100vh;
@@ -67,13 +67,16 @@
   background-color: #d8d8f6;
   position: relative;
   top: 0px;
-  left: 25px;
+  left: 0px;
   width: 85%;
-  height: 30%;
+  height: 25%;
   margin-top: 0%;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
+  border: 2px solid #fff;
+  padding-left: 5px;
+  padding-bottom: 0;
 }
 .lines h3{
   position: relative;
@@ -92,15 +95,16 @@
   font-family: 'Architects Daughter';
 }
 .book-scroll {
-  margin-top: 0px;
+  margin-top: 20px;
   width: 100%;
   position: relative;
   
 }
 .book-scroll p{
   
-  margin-bottom: 1px;
+  margin-bottom: 10px;
   margin-top: 0%;
+  font-weight: 600;
 }
 .book-card {
   padding: 10px;
@@ -176,7 +180,7 @@
   justify-content: center;
   align-items: center;
   margin: 100px auto;
-  transform: translateY(60%);
+  transform: translateY(62%);
 }
 
 .book-details h1 {
@@ -269,8 +273,7 @@
   display: flex;
   flex-direction: column;
   background-color: #d8d8f6;
-  border-style: outset;
-  border-radius: 5px;
+  border: 2px solid #fff;
 }
 .input-review p{
   font-family: 'Inika';
@@ -288,7 +291,7 @@
 .input-review textarea{
   width: 60%;
   min-height: 50px;
-  border-radius: 15px;
+  border-radius: 5px;
   background-color: #fff;
   margin-left: 20px;
   font-family: 'Architects Daughter';
@@ -432,6 +435,9 @@
   .nav-btn:hover{
     text-decoration: underline;
   }
+  .main{
+    height: 90vh;
+  }
   
   .search-results {
     width: 80%;
@@ -558,7 +564,7 @@
     margin-top: 0;
     transform: translateY(-80%);
   }
-  #return-btn{
+  .return-btn{
     background-color: #9d88af;
     border: none;
     width: 25%;
