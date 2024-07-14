@@ -116,7 +116,7 @@ function IssuedBooks() {
                                 <p><strong>Author:</strong> {book.author}</p>
                                 <p><strong>Issue Date:</strong> {issueDate.toLocaleDateString()}</p>
                                 <p><strong>Due Date:</strong> {dueDate.toLocaleDateString()}</p>
-                                <button onClick={() => handleReturn(book.bookId)}>RETURN</button>
+                                <button onClick={() => handleReturn(book.bookId)} className="return-btn">RETURN</button>
                             </li>
                         );
                     })}

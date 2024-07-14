@@ -25,10 +25,10 @@ const bookSchema = new mongoose.Schema({
     department: String,
     description: String,
     ratings: [{
-        user: String, // User who gave the rating/review
-        rating: Number, // Rating given (e.g., 1-5 stars)
-        review: String, // Review text
-        date: { type: Date, default: Date.now } // Date of the rating/review
+        user: String,
+        rating: Number,
+        review: String,
+        date: { type: Date, default: Date.now }
     }]
 });
 
@@ -50,12 +50,12 @@ const Notification = mongoose.model('Notification', new mongoose.Schema({
     date: { type: Date, default: Date.now },
 }));
 
-const ONE_MIN_IN_MS = 1 * 60 * 1000;
+const FIFTEEN_DAYS_IN_MS = 15 * 24 * 60 * 60 * 1000;
 
-schedule.scheduleJob('*/1 * * * *', async () => {
+schedule.scheduleJob('0 0 * * *', async () => {
     try {
         const overdueBooks = await IssuedBook.find({
-            issueDate: { $lt: new Date(Date.now() - ONE_MIN_IN_MS) }
+            issueDate: { $lt: new Date(Date.now() - FIFTEEN_DAYS_IN_MS) }
         });
         overdueBooks.forEach(async (book) => {
             const notification = new Notification({
@@ -252,7 +252,7 @@ app.get('/notifications/:email', async (req, res) => {
     try {
         const overdueBooks = await IssuedBook.find({
             userEmail: email,
-            issueDate: { $lt: new Date(Date.now() - ONE_MIN_IN_MS) }
+            issueDate: { $lt: new Date(Date.now() - FIFTEEN_DAYS_IN_MS) }
         });
         res.json(overdueBooks);
     } catch (error) {
