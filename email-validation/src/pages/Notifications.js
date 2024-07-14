@@ -102,7 +102,7 @@ const Notifications = () => {
                                 <p><strong>Issue Date:</strong> {issueDate.toLocaleDateString()}</p>
                                 <p><strong>Due Date:</strong> {dueDate.toLocaleDateString()}</p>
                                 <p>The book is due. Please return as early as possible.</p>
-                                <button onClick={() => handleReturn(book.bookId)}>RETURN</button>
+                                <button onClick={() => handleReturn(book.bookId)} className="return-btn">RETURN</button>
                             </li>
                         );
                     })}
