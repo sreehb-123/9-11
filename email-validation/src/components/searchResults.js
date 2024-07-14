@@ -51,6 +51,7 @@ function SearchResults() {
     <div className='NAVBAR'>
         <Navbar />
     </div>
+    <div className="main">
     <div className="search-results">
       {error && <p className="error-message">{error}</p>}
       <ul>
@@ -68,6 +69,7 @@ function SearchResults() {
           </div>
         )}
       </ul>
+    </div>
     </div>
     </>
   );
