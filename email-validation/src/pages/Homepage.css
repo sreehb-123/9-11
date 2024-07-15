@@ -6,3 +6,17 @@ body{
     flex-direction: row-reverse;
     justify-content: space-around;
 }
+@media (max-width: 991px) {
+    .Homepage{
+      display: flex;
+      flex-direction: column-reverse;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      height: 90%;
+    }
+    .App{
+        width: 100vw;
+
+    }
+}
