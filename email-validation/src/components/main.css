@@ -99,7 +99,7 @@
 }
 .book-scroll {
   margin-top: 20px;
-  width: 100%;
+  width: 95%;
   position: relative;
   
 }
@@ -146,10 +146,40 @@
   margin: 0 4cqb 2cqb 3cqb;
 }
 
-@media (max-width: 991px) {
+@media (min-width: 690px) and (max-width: 1024px) {
   .branch-container{
     top: 100px;
   }
+  .branch-container{
+      margin-top: 170%;
+      margin-left: 10px;
+      z-index: 10;
+  }
+  .display{
+    margin-top: 5%;
+    width: 90vw;
+    z-index: 5;
+  }
+}
+@media (max-width: 690px){
+  
+  .branch-container{
+      top: 200px;
+      margin-top: 280%;
+      z-index: 10;
+  }
+  .display{
+    margin-top: 10%;
+    width: 140vw;
+    height: 40vh;
+    z-index: 5;
+    left: 10px;
+  }
+  .lines {
+      width: 90%;
+      height: fit-content;
+  }
+  
 }
 .NAVBAR {
     position: sticky;
@@ -316,6 +346,38 @@
 .input-review button:hover{
   background-color: #fff;
 }
+@media (min-width: 690px) and (max-width: 991px){
+  .book-details{
+    margin-top: 5px;
+    transform: translateY(55%);
+  }
+  .book-details .info p {
+    font-size: 15px;
+    font-family: 'Architects Daughter';
+  }
+  .book-details h1{
+    font-size: 18px;
+  }
+  .navigation{
+    transform: translateY(110%);
+  }
+}
+@media (max-width: 690px) {
+  .book-details{
+    transform: translateY(47%);
+  }
+  .book-details .info p{
+    font-size: 15px;
+    margin-right: 0px;
+  }
+  .book-details h1{
+    font-size: 20px;
+    margin-bottom: 0px;
+  }
+  .navigation{
+    transform: translateY(110%);
+  }
+}
 .star-rating {
   display: flex;
   flex-direction: row;
@@ -423,6 +485,11 @@
     padding: 0 0 0 10px;
     font-family:'Architects Daughter';
   }
+  @media (max-width: 690px){
+    .bookList li{
+      width: 100%;
+    }
+  }
   .navigation{
     position: absolute;
     top: 85px;
@@ -509,7 +576,7 @@
     margin-bottom: 10px;
   }
  
-  .none{
+  .none-issue{
     background-color: #d8d8f6;
     width: 100vw;
     height: 50vh;
@@ -517,15 +584,28 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    margin-top: 200px;
-    transform: translateY(-50%);
+    margin-top: 250px;
+    transform: translateY(-70%);
     
   }
-  .none p{
+  .none-issue,.none-notification p{
     font-family: 'Architects Daughter';
     font-size: 35px;
   }
-  .none i{
+  .none-notification{
+    background-color: #d8d8f6;
+    width: 100vw;
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 100px;
+    transform: translateX(-15%);
+    
+  }
+  .none-notification i{
     font-size: 80px;
     color: #3c1361;
     height: 100px;
