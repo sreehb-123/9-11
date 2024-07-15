@@ -1,16 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import { Link } from "react-router-dom";
 import '../components/main.css';
+import { useNavigate } from 'react-router-dom';
+import 'boxicons/css/boxicons.min.css';
 
 const Notifications = () => {
     const [notifications, setNotifications] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     const email = localStorage.getItem('userEmail');
 
     const [issuedBooks,setIssuedBooks] = useState([]);
+
+    const navigateHome = () => {
+        navigate('/home');
+    };
 
     useEffect(() => {
         const fetchNotifications = async () => {
@@ -85,28 +92,36 @@ const Notifications = () => {
             <div className="NAVBAR">
                 <Navbar />
             </div>
-            <div className="books" id="notifications">
-                <h2>Notifications</h2>
-                <ul className="bookList">
-                    {notifications.map(book => {
-                        const issueDate = new Date(book.issueDate);
-                        const dueDate = new Date(issueDate.getTime() + 15 * 24 * 60 * 60 * 1000);
-                        return (
-                            <li key={book._id}>
-                                <h2>
-                                    <Link to={`/book/${book.bookId}`} className="book-link">
-                                        {book.title}
-                                    </Link>
-                                </h2>
-                                <p><strong>Author:</strong> {book.author}</p>
-                                <p><strong>Issue Date:</strong> {issueDate.toLocaleDateString()}</p>
-                                <p><strong>Due Date:</strong> {dueDate.toLocaleDateString()}</p>
-                                <p>The book is due. Please return as early as possible.</p>
-                                <button onClick={() => handleReturn(book.bookId)} className="return-btn">RETURN</button>
-                            </li>
-                        );
-                    })}
-                </ul>
+            <div className="books" id="notifications-container">
+                {notifications.length === 0 ? (
+                    <div className="none-notification">
+                        <i class='bx bxs-bell'></i>
+                        <p className="no-notification">No notifications at the moment.</p>
+                        <button onClick={navigateHome} className="return-home">Return To Home</button>
+                    </div>
+                ) : (
+                    <ul className="bookList">
+                        <h2 className="notifications-heading">Notifications</h2>
+                        {notifications.map(book => {
+                            const issueDate = new Date(book.issueDate);
+                            const dueDate = new Date(issueDate.getTime() + 15 * 24 * 60 * 60 * 1000);
+                            return (
+                                <li key={book._id} className="notification-item">
+                                    <h2 className="book-title">
+                                        <Link to={`/book/${book.bookId}`} className="book-link">
+                                            {book.title}
+                                        </Link>
+                                    </h2>
+                                    <p><strong>Author:</strong> {book.author}</p>
+                                    <p><strong>Issue Date:</strong> {issueDate.toLocaleDateString()}</p>
+                                    <p><strong>Due Date:</strong> {dueDate.toLocaleDateString()}</p>
+                                    <p className="due-notice">The book is due. Please return as early as possible.</p>
+                                    <button onClick={() => handleReturn(book.bookId)} className="return-btn">RETURN</button>
+                                </li>
+                            );
+                        })}
+                    </ul>
+                )}
             </div>
         </>
     );
