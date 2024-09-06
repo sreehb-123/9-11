@@ -12,10 +12,12 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect('mongodb://localhost:27017/libraryDB', {
+mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-});
+})
+.then(() => console.log('MongoDB connected'))
+.catch(err => console.error('MongoDB connection error:', err));
 
 const bookSchema = new mongoose.Schema({
     title: String,
